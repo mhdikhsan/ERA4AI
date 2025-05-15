@@ -19,3 +19,5 @@ ERA4AI is an ontology-based framework designed to support responsible and transp
 
 
 ## LICENSE
+This project is licensed under the MIT License.
+You are free to use, modify, and distribute this software with proper attribution.

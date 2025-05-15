@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rdf:RDF
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:reai="http://example.org/ontology/reai#"
+>
+  <rdf:Description rdf:about="http://example.org/medical_ai#VBSR_102">
+    <rdf:type rdf:resource="http://example.org/ontology/reai#ValueBasedSystemRequirement"/>
+    <reai:derivedFrom rdf:resource="http://example.org/medical_ai#EVR_T1"/>
+    <reai:supportsEthicalGoal rdf:resource="http://example.org/medical_ai#Goal_Transparency"/>
+    <reai:realizedBy rdf:resource="http://example.org/medical_ai#FR3"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/medical_ai#NFR3">
+    <rdf:type rdf:resource="http://example.org/ontology/reai#NonFunctionalRequirement"/>
+    <reai:affectsComponent rdf:resource="http://example.org/medical_ai#PredictionEngine"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/medical_ai#VBSR_103">
+    <rdf:type rdf:resource="http://example.org/ontology/reai#ValueBasedSystemRequirement"/>
+    <reai:derivedFrom rdf:resource="http://example.org/medical_ai#EVR_A1"/>
+    <reai:supportsEthicalGoal rdf:resource="http://example.org/medical_ai#Goal_Autonomy"/>
+    <reai:realizedBy rdf:resource="http://example.org/medical_ai#FR4"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/medical_ai#VBSR_101">
+    <rdf:type rdf:resource="http://example.org/ontology/reai#ValueBasedSystemRequirement"/>
+    <reai:derivedFrom rdf:resource="http://example.org/medical_ai#EVR_F1"/>
+    <reai:supportsEthicalGoal rdf:resource="http://example.org/medical_ai#Goal_Fairness"/>
+    <reai:realizedBy rdf:resource="http://example.org/medical_ai#NFR2"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/medical_ai#FR3">
+    <rdf:type rdf:resource="http://example.org/ontology/reai#FunctionalRequirement"/>
+    <reai:affectsComponent rdf:resource="http://example.org/medical_ai#PredictionEngine"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/medical_ai#FR1">
+    <rdf:type rdf:resource="http://example.org/ontology/reai#FunctionalRequirement"/>
+    <reai:affectsComponent rdf:resource="http://example.org/medical_ai#PredictionEngine"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/medical_ai#ValueRegister_MedAI">
+    <rdf:type rdf:resource="http://example.org/ontology/reai#ValueRegister"/>
+    <reai:hasExpectation rdf:resource="http://example.org/medical_ai#EVR_F1"/>
+    <reai:hasExpectation rdf:resource="http://example.org/medical_ai#EVR_T1"/>
+    <reai:hasExpectation rdf:resource="http://example.org/medical_ai#EVR_A1"/>
+    <reai:hasExpectation rdf:resource="http://example.org/medical_ai#EVR_R1"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/medical_ai#Goal_Autonomy">
+    <rdf:type rdf:resource="http://example.org/ontology/reai#EthicalGoal"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/medical_ai#EVR_A1">
+    <rdf:type rdf:resource="http://example.org/ontology/reai#EthicalValueRequirement"/>
+    <reai:derivedFromValue rdf:resource="http://example.org/medical_ai#Autonomy"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/medical_ai#R2">
+    <rdf:type rdf:resource="http://example.org/ontology/reai#Risk"/>
+    <reai:introducedByRequirement rdf:resource="http://example.org/medical_ai#NFR2"/>
+    <reai:mitigatedByRequirement rdf:resource="http://example.org/medical_ai#VBSR_101"/>
+    <reai:triggeredByEthics rdf:resource="http://example.org/medical_ai#EVR_F1"/>
+    <reai:trackedIn rdf:resource="http://example.org/medical_ai#RiskRegister_MedAI"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/medical_ai#R4">
+    <rdf:type rdf:resource="http://example.org/ontology/reai#Risk"/>
+    <reai:introducedByRequirement rdf:resource="http://example.org/medical_ai#FR5"/>
+    <reai:mitigatedByRequirement rdf:resource="http://example.org/medical_ai#VBSR_104"/>
+    <reai:triggeredByEthics rdf:resource="http://example.org/medical_ai#EVR_R1"/>
+    <reai:trackedIn rdf:resource="http://example.org/medical_ai#RiskRegister_MedAI"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/medical_ai#R3">
+    <rdf:type rdf:resource="http://example.org/ontology/reai#Risk"/>
+    <reai:introducedByRequirement rdf:resource="http://example.org/medical_ai#FR3"/>
+    <reai:introducedByRequirement rdf:resource="http://example.org/medical_ai#FR4"/>
+    <reai:mitigatedByRequirement rdf:resource="http://example.org/medical_ai#VBSR_102"/>
+    <reai:mitigatedByRequirement rdf:resource="http://example.org/medical_ai#VBSR_103"/>
+    <reai:triggeredByEthics rdf:resource="http://example.org/medical_ai#EVR_T1"/>
+    <reai:triggeredByEthics rdf:resource="http://example.org/medical_ai#EVR_A1"/>
+    <reai:trackedIn rdf:resource="http://example.org/medical_ai#RiskRegister_MedAI"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/medical_ai#NFR4">
+    <rdf:type rdf:resource="http://example.org/ontology/reai#NonFunctionalRequirement"/>
+    <reai:affectsComponent rdf:resource="http://example.org/medical_ai#PredictionEngine"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/medical_ai#VBSR_104">
+    <rdf:type rdf:resource="http://example.org/ontology/reai#ValueBasedSystemRequirement"/>
+    <reai:derivedFrom rdf:resource="http://example.org/medical_ai#EVR_R1"/>
+    <reai:supportsEthicalGoal rdf:resource="http://example.org/medical_ai#Goal_Accountability"/>
+    <reai:realizedBy rdf:resource="http://example.org/medical_ai#FR5"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/medical_ai#NFR2">
+    <rdf:type rdf:resource="http://example.org/ontology/reai#NonFunctionalRequirement"/>
+    <reai:affectsComponent rdf:resource="http://example.org/medical_ai#PredictionEngine"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/medical_ai#FR5">
+    <rdf:type rdf:resource="http://example.org/ontology/reai#FunctionalRequirement"/>
+    <reai:affectsComponent rdf:resource="http://example.org/medical_ai#PredictionEngine"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/medical_ai#NFR1">
+    <rdf:type rdf:resource="http://example.org/ontology/reai#NonFunctionalRequirement"/>
+    <reai:affectsComponent rdf:resource="http://example.org/medical_ai#PredictionEngine"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/medical_ai#FR2">
+    <rdf:type rdf:resource="http://example.org/ontology/reai#FunctionalRequirement"/>
+    <reai:affectsComponent rdf:resource="http://example.org/medical_ai#PredictionEngine"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/medical_ai#Autonomy">
+    <rdf:type rdf:resource="http://example.org/ontology/reai#TypicalEthicalValue"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/medical_ai#FR4">
+    <rdf:type rdf:resource="http://example.org/ontology/reai#FunctionalRequirement"/>
+    <reai:affectsComponent rdf:resource="http://example.org/medical_ai#PredictionEngine"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/medical_ai#EVR_R1">
+    <rdf:type rdf:resource="http://example.org/ontology/reai#EthicalValueRequirement"/>
+    <reai:derivedFromValue rdf:resource="http://example.org/medical_ai#Accountability"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/medical_ai#EVR_F1">
+    <rdf:type rdf:resource="http://example.org/ontology/reai#EthicalValueRequirement"/>
+    <reai:derivedFromValue rdf:resource="http://example.org/medical_ai#Fairness"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/medical_ai#Accountability">
+    <rdf:type rdf:resource="http://example.org/ontology/reai#TypicalEthicalValue"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/medical_ai#EVR_T1">
+    <rdf:type rdf:resource="http://example.org/ontology/reai#EthicalValueRequirement"/>
+    <reai:derivedFromValue rdf:resource="http://example.org/medical_ai#Transparency"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/medical_ai#Goal_Transparency">
+    <rdf:type rdf:resource="http://example.org/ontology/reai#EthicalGoal"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/medical_ai#RiskRegister_MedAI">
+    <rdf:type rdf:resource="http://example.org/ontology/reai#RiskRegister"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/medical_ai#Transparency">
+    <rdf:type rdf:resource="http://example.org/ontology/reai#TypicalEthicalValue"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/medical_ai#Goal_Fairness">
+    <rdf:type rdf:resource="http://example.org/ontology/reai#EthicalGoal"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/medical_ai#Fairness">
+    <rdf:type rdf:resource="http://example.org/ontology/reai#TypicalEthicalValue"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/medical_ai#PredictionEngine">
+    <rdf:type rdf:resource="http://example.org/ontology/reai#SystemComponent"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/medical_ai#Goal_Accountability">
+    <rdf:type rdf:resource="http://example.org/ontology/reai#EthicalGoal"/>
+  </rdf:Description>
+</rdf:RDF>

@@ -9,40 +9,44 @@
     a owl:Ontology ;
     owl:imports <https://w3id.org/swemls> , <https://w3id.org/airo> .
 
-####################
-#Classes
-####################
+######################################################
+# Classes
+######################################################
 
-# System Requirement Engineering
+### System Requirement Engineering ###
 reai:SystemRequirement a owl:Class .
 reai:FunctionalRequirement a owl:Class ; rdfs:subClassOf reai:SystemRequirement .
 reai:NonFunctionalRequirement a owl:Class ; rdfs:subClassOf reai:SystemRequirement .
 reai:SystemComponent a owl:Class ; rdfs:subClassOf swemls:SystemComponent .
 
-# Ethical Requirement Engineering
+### Ethical Requirement Engineering ###
 reai:TypicalEthicalValue a owl:Class .
 reai:EthicalValueRequirement a owl:Class .
-reai:ValueBasedSystemRequirement a owl:Class . 
+reai:ValueBasedSystemRequirement a owl:Class .
 reai:ValueRegister a owl:Class .
 reai:EthicalGoal a owl:Class .
 
-# Risk-Oriented Engineering (from AIRO)
+### Risk-Oriented Engineering ###
 reai:Risk a owl:Class ; rdfs:subClassOf airo:Risk .
 reai:RiskSource a owl:Class ; rdfs:subClassOf airo:RiskSource .
 reai:RiskImpact a owl:Class ; rdfs:subClassOf airo:Impact .
 reai:MitigationStrategy a owl:Class ; rdfs:subClassOf airo:RiskControl .
 reai:RiskRegister a owl:Class .
 
-##########################
+######################################################
 # Object Properties
-##########################
+######################################################
 
-# System Requirement Engineering
+### System Requirement Engineering ###
 reai:affectsComponent a owl:ObjectProperty ;
     rdfs:domain reai:SystemRequirement ;
     rdfs:range reai:SystemComponent .
 
-# Ethical Requirement Engineering
+reai:realizedBy a owl:ObjectProperty ;
+    rdfs:domain reai:ValueBasedSystemRequirement ;
+    rdfs:range reai:SystemRequirement .
+
+### Ethical Requirement Engineering ###
 reai:derivedFromValue a owl:ObjectProperty ;
     rdfs:domain reai:EthicalValueRequirement ;
     rdfs:range reai:TypicalEthicalValue .
@@ -50,6 +54,10 @@ reai:derivedFromValue a owl:ObjectProperty ;
 reai:operationalizedAs a owl:ObjectProperty ;
     rdfs:domain reai:EthicalValueRequirement ;
     rdfs:range reai:ValueBasedSystemRequirement .
+
+reai:derivedFrom a owl:ObjectProperty ;
+    rdfs:domain reai:ValueBasedSystemRequirement ;
+    rdfs:range reai:EthicalValueRequirement .
 
 reai:supportsEthicalGoal a owl:ObjectProperty ;
     rdfs:domain reai:ValueBasedSystemRequirement ;
@@ -59,12 +67,11 @@ reai:hasExpectation a owl:ObjectProperty ;
     rdfs:domain reai:ValueRegister ;
     rdfs:range reai:EthicalValueRequirement .
 
-reai:derivedFrom a owl:ObjectProperty ;
-    rdfs:domain reai:ValueBasedSystemRequirement ;
-    rdfs:range reai:EthicalValueRequirement .
+reai:associatedRisk a owl:ObjectProperty ;
+    rdfs:domain reai:EthicalValueRequirement ;
+    rdfs:range reai:Risk .
 
-# Risk-Oriented Engineering
-
+### Risk-Oriented Engineering ###
 reai:mitigatedBy a owl:ObjectProperty ;
     rdfs:domain reai:Risk ;
     rdfs:range reai:MitigationStrategy .
@@ -72,17 +79,3 @@ reai:mitigatedBy a owl:ObjectProperty ;
 reai:trackedIn a owl:ObjectProperty ;
     rdfs:domain reai:Risk ;
     rdfs:range reai:RiskRegister .
-
-# Cross-Module Links
-reai:realizedBy a owl:ObjectProperty ;  
-    rdfs:domain reai:ValueBasedSystemRequirement ;
-    rdfs:range reai:SystemRequirement .
-
-reai:associatedRisk a owl:ObjectProperty ;
-    rdfs:domain reai:EthicalValueRequirement ;
-    rdfs:range reai:Risk .
-
-reai:mitigatedByRequirement a owl:ObjectProperty ;
-    rdfs:domain reai:Risk ;
-    rdfs:range reai:ValueBasedSystemRequirement .
-

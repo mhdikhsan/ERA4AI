@@ -1,81 +1,1095 @@
-@prefix reai: <http://example.org/ontology/reai#> .
-@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix owl:  <http://www.w3.org/2002/07/owl#> .
-@prefix swemls: <https://w3id.org/swemls#> .
+@prefix : <http://www.semanticweb.org/ontologies/era4ai#> .
 @prefix airo: <https://w3id.org/airo#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/2001/XMLSchema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@base <http://www.semanticweb.org/ontologies/era4ai#> .
 
-<http://example.org/ontology/reai>
-    a owl:Ontology ;
-    owl:imports <https://w3id.org/swemls> , <https://w3id.org/airo> .
+<http://www.semanticweb.org/ontologies/era4ai> rdf:type owl:Ontology ;
+    owl:imports <https://w3id.org/airo> ;
+    rdfs:label "ERA4AI: Risk-aware Requirements Engineering for AI Systems"@en ;
+    rdfs:comment "An ontology integrating Goal-Oriented Requirements Engineering (GORE) with AIRO (AI Risk Ontology) for comprehensive risk modeling in AI systems. Extends AIRO with GORE concepts and AI-specific risk patterns."@en ;
+    owl:versionInfo "1.1" .
 
-######################################################
-# Classes
-######################################################
+#################################################################
+#    Object Properties
+#################################################################
 
-### System Requirement Engineering ###
-reai:SystemRequirement a owl:Class .
-reai:FunctionalRequirement a owl:Class ; rdfs:subClassOf reai:SystemRequirement .
-reai:NonFunctionalRequirement a owl:Class ; rdfs:subClassOf reai:SystemRequirement .
-reai:SystemComponent a owl:Class ; rdfs:subClassOf swemls:SystemComponent .
+### Goal-related Properties
+:refinesGoal rdf:type owl:ObjectProperty ;
+    rdfs:domain :Goal ;
+    rdfs:range :Goal ;
+    rdfs:label "refines goal"@en ;
+    rdfs:comment "Relates a goal to its refined sub-goal"@en .
 
-### Ethical Requirement Engineering ###
-reai:TypicalEthicalValue a owl:Class .
-reai:EthicalValueRequirement a owl:Class .
-reai:ValueBasedSystemRequirement a owl:Class .
-reai:ValueRegister a owl:Class .
-reai:EthicalGoal a owl:Class .
+:operationalizedBy rdf:type owl:ObjectProperty ;
+    rdfs:domain :Goal ;
+    rdfs:range :Task ;
+    rdfs:label "operationalized by"@en ;
+    rdfs:comment "Links a goal to the task that operationalizes it"@en .
 
-### Risk-Oriented Engineering ###
-reai:Risk a owl:Class ; rdfs:subClassOf airo:Risk .
-reai:RiskSource a owl:Class ; rdfs:subClassOf airo:RiskSource .
-reai:RiskImpact a owl:Class ; rdfs:subClassOf airo:Impact .
-reai:MitigationStrategy a owl:Class ; rdfs:subClassOf airo:RiskControl .
-reai:RiskRegister a owl:Class .
+:contributesPositivelyTo rdf:type owl:ObjectProperty ;
+    rdfs:domain :Softgoal ;
+    rdfs:range :Softgoal ;
+    rdfs:label "contributes positively to"@en .
 
-######################################################
-# Object Properties
-######################################################
+:contributesNegativelyTo rdf:type owl:ObjectProperty ;
+    rdfs:domain :Softgoal ;
+    rdfs:range :Softgoal ;
+    rdfs:label "contributes negatively to"@en .
 
-### System Requirement Engineering ###
-reai:affectsComponent a owl:ObjectProperty ;
-    rdfs:domain reai:SystemRequirement ;
-    rdfs:range reai:SystemComponent .
+:conflictsWith rdf:type owl:ObjectProperty ;
+    rdfs:domain :Goal ;
+    rdfs:range :Goal ;
+    rdfs:label "conflicts with"@en .
 
-reai:realizedBy a owl:ObjectProperty ;
-    rdfs:domain reai:ValueBasedSystemRequirement ;
-    rdfs:range reai:SystemRequirement .
+### Responsibility Properties
+:assignedTo rdf:type owl:ObjectProperty ;
+    rdfs:domain :Task ;
+    rdfs:range :Agent ;
+    rdfs:label "assigned to"@en .
 
-### Ethical Requirement Engineering ###
-reai:derivedFromValue a owl:ObjectProperty ;
-    rdfs:domain reai:EthicalValueRequirement ;
-    rdfs:range reai:TypicalEthicalValue .
+:hasRole rdf:type owl:ObjectProperty ;
+    rdfs:domain :Actor ;
+    rdfs:range :Role ;
+    rdfs:label "has role"@en .
 
-reai:operationalizedAs a owl:ObjectProperty ;
-    rdfs:domain reai:EthicalValueRequirement ;
-    rdfs:range reai:ValueBasedSystemRequirement .
+:dependsOn rdf:type owl:ObjectProperty ;
+    rdfs:label "depends on"@en ;
+    rdfs:comment "General dependency relationship"@en .
 
-reai:derivedFrom a owl:ObjectProperty ;
-    rdfs:domain reai:ValueBasedSystemRequirement ;
-    rdfs:range reai:EthicalValueRequirement .
+### Risk-related Properties (AIRO-aligned)
+:obstructs rdf:type owl:ObjectProperty ;
+    rdfs:domain :Obstacle ;
+    rdfs:range :Goal ;
+    rdfs:label "obstructs"@en ;
+    rdfs:comment "Links an obstacle to the goal it prevents from being satisfied"@en .
 
-reai:supportsEthicalGoal a owl:ObjectProperty ;
-    rdfs:domain reai:ValueBasedSystemRequirement ;
-    rdfs:range reai:EthicalGoal .
+:manifestsAs rdf:type owl:ObjectProperty ;
+    rdfs:domain :RiskSource ;
+    rdfs:range :Obstacle ;
+    rdfs:label "manifests as"@en ;
+    rdfs:comment "Links a risk source to the obstacle it creates"@en .
 
-reai:hasExpectation a owl:ObjectProperty ;
-    rdfs:domain reai:ValueRegister ;
-    rdfs:range reai:EthicalValueRequirement .
+:causedBy rdf:type owl:ObjectProperty ;
+    rdfs:domain :Risk ;
+    rdfs:range :RiskSource ;
+    rdfs:label "caused by"@en ;
+    rdfs:comment "Links a risk to its originating risk source"@en .
 
-reai:associatedRisk a owl:ObjectProperty ;
-    rdfs:domain reai:EthicalValueRequirement ;
-    rdfs:range reai:Risk .
+:hasConsequence rdf:type owl:ObjectProperty ;
+    rdfs:domain :Risk ;
+    rdfs:range :Consequence ;
+    rdfs:label "has consequence"@en ;
+    rdfs:comment "Relates a risk to its potential consequences"@en .
 
-### Risk-Oriented Engineering ###
-reai:mitigatedBy a owl:ObjectProperty ;
-    rdfs:domain reai:Risk ;
-    rdfs:range reai:MitigationStrategy .
+:threatens rdf:type owl:ObjectProperty ;
+    rdfs:domain :Risk ;
+    rdfs:range :Asset ;
+    rdfs:label "threatens"@en ;
+    rdfs:comment "Indicates which assets are at risk"@en .
 
-reai:trackedIn a owl:ObjectProperty ;
-    rdfs:domain reai:Risk ;
-    rdfs:range reai:RiskRegister .
+:mitigatedBy rdf:type owl:ObjectProperty ;
+    rdfs:domain :Risk ;
+    rdfs:range :RiskControl ;
+    rdfs:label "mitigated by"@en ;
+    rdfs:comment "Links a risk to risk controls that address it"@en .
+
+:occursIn rdf:type owl:ObjectProperty ;
+    rdfs:domain :Risk ;
+    rdfs:range :LifecycleStage ;
+    rdfs:label "occurs in"@en ;
+    rdfs:comment "Indicates when in the AI lifecycle the risk may manifest"@en .
+
+:hasImpact rdf:type owl:ObjectProperty ;
+    rdfs:domain :Consequence ;
+    rdfs:range :Impact ;
+    rdfs:label "has impact"@en ;
+    rdfs:comment "Links consequences to their resulting impacts"@en .
+
+### AIRO-extended Risk Properties
+:hasRiskLevel rdf:type owl:ObjectProperty ;
+    rdfs:subPropertyOf airo:hasRiskLevel ;
+    rdfs:domain :Risk ;
+    rdfs:range airo:RiskLevel ;
+    rdfs:label "has AI risk level"@en ;
+    rdfs:comment "AI-specific extension of AIRO risk level assessment"@en .
+
+:hasRiskCategory rdf:type owl:ObjectProperty ;
+    rdfs:subPropertyOf airo:hasRiskCategory ;
+    rdfs:domain :Risk ;
+    rdfs:range airo:RiskCategory ;
+    rdfs:label "has AI risk category"@en ;
+    rdfs:comment "AI-specific categorization extending AIRO risk categories"@en .
+
+:hasRiskSource rdf:type owl:ObjectProperty ;
+    rdfs:subPropertyOf airo:hasRiskSource ;
+    rdfs:domain :Risk ;
+    rdfs:range :RiskSource ;
+    rdfs:label "has AI risk source"@en ;
+    rdfs:comment "AI-specific extension linking risks to their sources"@en .
+
+:exposesVulnerability rdf:type owl:ObjectProperty ;
+    rdfs:subPropertyOf airo:exposesVulnerability ;
+    rdfs:domain :RiskSource ;
+    rdfs:range :Vulnerability ;
+    rdfs:label "exposes AI vulnerability"@en ;
+    rdfs:comment "AI-specific extension showing which vulnerabilities are exposed by risk sources"@en .
+
+:affects rdf:type owl:ObjectProperty ;
+    rdfs:subPropertyOf airo:affects ;
+    rdfs:domain :Risk ;
+    rdfs:range :Asset ;
+    rdfs:label "affects AI asset"@en ;
+    rdfs:comment "AI-specific extension showing which assets are affected by risks"@en .
+
+### AIRO-Extended Vulnerability Properties
+:hasVulnerability rdf:type owl:ObjectProperty ;
+    rdfs:subPropertyOf airo:hasVulnerability ;
+    rdfs:domain :Asset ;
+    rdfs:range :Vulnerability ;
+    rdfs:label "has AI vulnerability"@en ;
+    rdfs:comment "AI-specific extension relating assets to their vulnerabilities"@en .
+
+:exploitedBy rdf:type owl:ObjectProperty ;
+    rdfs:subPropertyOf airo:exploitedBy ;
+    rdfs:domain :Vulnerability ;
+    rdfs:range :RiskSource ;
+    rdfs:label "exploited by AI risk source"@en ;
+    rdfs:comment "AI-specific extension linking vulnerabilities to exploiting risk sources"@en .
+
+:exposesAsset rdf:type owl:ObjectProperty ;
+    rdfs:subPropertyOf airo:exposesAsset ;
+    rdfs:domain :Vulnerability ;
+    rdfs:range :Asset ;
+    rdfs:label "exposes AI asset"@en ;
+    rdfs:comment "AI-specific extension indicating which assets are exposed by vulnerabilities"@en .
+
+### AIRO-Extended Risk Control Properties
+:controls rdf:type owl:ObjectProperty ;
+    rdfs:subPropertyOf airo:controls ;
+    rdfs:domain :RiskControl ;
+    rdfs:range :Risk ;
+    rdfs:label "controls AI risk"@en ;
+    rdfs:comment "AI-specific extension indicating which risks are addressed by controls"@en .
+
+:mitigates rdf:type owl:ObjectProperty ;
+    rdfs:subPropertyOf airo:mitigates ;
+    rdfs:domain :RiskControl ;
+    rdfs:range :Vulnerability ;
+    rdfs:label "mitigates AI vulnerability"@en ;
+    rdfs:comment "AI-specific extension linking controls to vulnerabilities they mitigate"@en .
+
+:protects rdf:type owl:ObjectProperty ;
+    rdfs:subPropertyOf airo:protects ;
+    rdfs:domain :RiskControl ;
+    rdfs:range :Asset ;
+    rdfs:label "protects AI asset"@en ;
+    rdfs:comment "AI-specific extension indicating which assets are protected by controls"@en .
+
+### ERA4AI-Specific Extensions
+:realizesScenario rdf:type owl:ObjectProperty ;
+    rdfs:domain :Risk ;
+    rdfs:range :AIRiskScenario ;
+    rdfs:label "realizes risk scenario"@en ;
+    rdfs:comment "Links a risk to the scenarios in which it can manifest"@en .
+
+:followsPattern rdf:type owl:ObjectProperty ;
+    rdfs:domain :Risk ;
+    rdfs:range :RiskPattern ;
+    rdfs:label "follows risk pattern"@en ;
+    rdfs:comment "Indicates that a risk follows a known pattern"@en .
+
+:implementedBy rdf:type owl:ObjectProperty ;
+    rdfs:domain :RiskControl ;
+    rdfs:range :MitigationGoal ;
+    rdfs:label "implemented by mitigation goal"@en ;
+    rdfs:comment "Links AIRO risk controls to GORE mitigation goals"@en .
+
+### Means-Ends Properties
+:achieves rdf:type owl:ObjectProperty ;
+    rdfs:domain :Task ;
+    rdfs:range :Goal ;
+    rdfs:label "achieves"@en .
+
+:requires rdf:type owl:ObjectProperty ;
+    rdfs:domain :Task ;
+    rdfs:range :Resource ;
+    rdfs:label "requires"@en .
+
+:produces rdf:type owl:ObjectProperty ;
+    rdfs:domain :Task ;
+    rdfs:range :Resource ;
+    rdfs:label "produces"@en .
+
+:partOfPlan rdf:type owl:ObjectProperty ;
+    rdfs:domain :Task ;
+    rdfs:range :Plan ;
+    rdfs:label "part of plan"@en .
+
+### Context Properties
+:appliesInContext rdf:type owl:ObjectProperty ;
+    rdfs:domain :Risk ;
+    rdfs:range :Context ;
+    rdfs:label "applies in context"@en .
+
+:hasDomain rdf:type owl:ObjectProperty ;
+    rdfs:domain :Context ;
+    rdfs:range :Domain ;
+    rdfs:label "has domain"@en .
+
+:involvesStakeholder rdf:type owl:ObjectProperty ;
+    rdfs:domain :Context ;
+    rdfs:range :Actor ;
+    rdfs:label "involves stakeholder"@en .
+
+#################################################################
+#    Data Properties
+#################################################################
+
+:hasDescription rdf:type owl:DatatypeProperty ;
+    rdfs:range xsd:string ;
+    rdfs:label "has description"@en .
+
+:hasName rdf:type owl:DatatypeProperty ;
+    rdfs:range xsd:string ;
+    rdfs:label "has name"@en .
+
+:hasSatisfactionLevel rdf:type owl:DatatypeProperty ;
+    rdfs:domain :Softgoal ;
+    rdfs:range xsd:string ;
+    rdfs:label "has satisfaction level"@en ;
+    rdfs:comment "Values: low, medium, high, or numeric"@en .
+
+:hasSeverity rdf:type owl:DatatypeProperty ;
+    rdfs:domain :Risk ;
+    rdfs:range xsd:string ;
+    rdfs:label "has severity"@en .
+
+:hasLikelihood rdf:type owl:DatatypeProperty ;
+    rdfs:domain :Risk ;
+    rdfs:range xsd:string ;
+    rdfs:label "has likelihood"@en .
+
+### AIRO-Extended Data Properties
+:riskScore rdf:type owl:DatatypeProperty ;
+    rdfs:subPropertyOf airo:riskScore ;
+    rdfs:domain :Risk ;
+    rdfs:range xsd:float ;
+    rdfs:label "AI risk score"@en ;
+    rdfs:comment "AI-specific risk score extending AIRO risk assessment"@en .
+
+:probabilityOfOccurrence rdf:type owl:DatatypeProperty ;
+    rdfs:subPropertyOf airo:probabilityOfOccurrence ;
+    rdfs:domain :Risk ;
+    rdfs:range xsd:float ;
+    rdfs:label "AI risk probability"@en ;
+    rdfs:comment "AI-specific probability assessment extending AIRO"@en .
+
+:impactSeverity rdf:type owl:DatatypeProperty ;
+    rdfs:subPropertyOf airo:impactSeverity ;
+    rdfs:domain :Impact ;
+    rdfs:range xsd:string ;
+    rdfs:label "AI impact severity"@en ;
+    rdfs:comment "AI-specific impact severity extending AIRO"@en .
+
+:vulnerabilityScore rdf:type owl:DatatypeProperty ;
+    rdfs:subPropertyOf airo:vulnerabilityScore ;
+    rdfs:domain :Vulnerability ;
+    rdfs:range xsd:float ;
+    rdfs:label "AI vulnerability score"@en ;
+    rdfs:comment "AI-specific vulnerability score (e.g., CVSS score for AI systems)"@en .
+
+:exploitabilityLevel rdf:type owl:DatatypeProperty ;
+    rdfs:subPropertyOf airo:exploitabilityLevel ;
+    rdfs:domain :Vulnerability ;
+    rdfs:range xsd:string ;
+    rdfs:label "AI exploitability level"@en ;
+    rdfs:comment "AI-specific exploitability assessment extending AIRO"@en .
+
+:controlEffectiveness rdf:type owl:DatatypeProperty ;
+    rdfs:subPropertyOf airo:controlEffectiveness ;
+    rdfs:domain :RiskControl ;
+    rdfs:range xsd:float ;
+    rdfs:label "AI control effectiveness"@en ;
+    rdfs:comment "AI-specific control effectiveness measurement extending AIRO"@en .
+
+:controlMaturity rdf:type owl:DatatypeProperty ;
+    rdfs:subPropertyOf airo:controlMaturity ;
+    rdfs:domain :RiskControl ;
+    rdfs:range xsd:string ;
+    rdfs:label "AI control maturity"@en ;
+    rdfs:comment "AI-specific control maturity level extending AIRO"@en .
+
+### ERA4AI-Specific Data Properties
+:aiModelType rdf:type owl:DatatypeProperty ;
+    rdfs:domain :Asset ;
+    rdfs:range xsd:string ;
+    rdfs:label "AI model type"@en ;
+    rdfs:comment "Type of AI model (e.g., LLM, CNN, RNN, etc.)"@en .
+
+:trainingDataSize rdf:type owl:DatatypeProperty ;
+    rdfs:domain :Asset ;
+    rdfs:range xsd:long ;
+    rdfs:label "training data size"@en ;
+    rdfs:comment "Size of training dataset for AI models"@en .
+
+:confidenceThreshold rdf:type owl:DatatypeProperty ;
+    rdfs:domain :RiskControl ;
+    rdfs:range xsd:float ;
+    rdfs:label "confidence threshold"@en ;
+    rdfs:comment "Confidence threshold for AI decision making controls"@en .
+
+### Legacy Properties (maintained for backward compatibility)
+:hasSeverity rdf:type owl:DatatypeProperty ;
+    rdfs:domain :Risk ;
+    rdfs:range xsd:string ;
+    rdfs:label "has severity"@en .
+
+:hasLikelihood rdf:type owl:DatatypeProperty ;
+    rdfs:domain :Risk ;
+    rdfs:range xsd:string ;
+    rdfs:label "has likelihood"@en .
+
+:isIntentional rdf:type owl:DatatypeProperty ;
+    rdfs:domain :Risk ;
+    rdfs:range xsd:boolean ;
+    rdfs:label "is intentional"@en .
+
+:controlType rdf:type owl:DatatypeProperty ;
+    rdfs:domain :RiskControl ;
+    rdfs:range xsd:string ;
+    rdfs:label "control type"@en ;
+    rdfs:comment "Type of control: preventive, detective, or corrective"@en .
+
+#################################################################
+#    Classes - GORE Taxonomy
+#################################################################
+
+### 1. Goal Types
+:Goal rdf:type owl:Class ;
+    rdfs:label "Goal"@en ;
+    rdfs:comment "A desired state or objective in the system"@en .
+
+:FunctionalGoal rdf:type owl:Class ;
+    rdfs:subClassOf :Goal ;
+    rdfs:label "Functional Goal"@en ;
+    rdfs:comment "Describes what the system must do"@en .
+
+:Softgoal rdf:type owl:Class ;
+    rdfs:subClassOf :Goal ;
+    rdfs:label "Softgoal (Non-Functional Goal)"@en ;
+    rdfs:comment "Describes qualities or constraints with subjective satisfaction"@en .
+
+:BehavioralGoal rdf:type owl:Class ;
+    rdfs:subClassOf :Goal ;
+    rdfs:label "Behavioral Goal"@en ;
+    rdfs:comment "Describes system behavior over time"@en .
+
+:DomainGoal rdf:type owl:Class ;
+    rdfs:subClassOf :Goal ;
+    rdfs:label "Domain/Context Goal"@en ;
+    rdfs:comment "Environmental rules or domain-specific assumptions"@en .
+
+:ValueGoal rdf:type owl:Class ;
+    rdfs:subClassOf :Goal ;
+    rdfs:label "Value/Ethical Goal"@en ;
+    rdfs:comment "Human values or ethical principles"@en .
+
+### 2. Goal Refinement
+:StrategicGoal rdf:type owl:Class ;
+    rdfs:subClassOf :Goal ;
+    rdfs:label "Strategic Goal"@en ;
+    rdfs:comment "High-level business motivations"@en .
+
+:TacticalGoal rdf:type owl:Class ;
+    rdfs:subClassOf :Goal ;
+    rdfs:label "Tactical Goal"@en ;
+    rdfs:comment "Mid-level goals linking strategy to operations"@en .
+
+:OperationalGoal rdf:type owl:Class ;
+    rdfs:subClassOf :Goal ;
+    rdfs:label "Operational Goal"@en ;
+    rdfs:comment "Concrete, implementable goals"@en .
+
+:ANDRefinement rdf:type owl:Class ;
+    rdfs:subClassOf :Goal ;
+    rdfs:label "AND Refinement"@en ;
+    rdfs:comment "All subgoals are required to satisfy the parent goal"@en .
+
+:ORRefinement rdf:type owl:Class ;
+    rdfs:subClassOf :Goal ;
+    rdfs:label "OR Refinement"@en ;
+    rdfs:comment "Alternative ways to satisfy a goal"@en .
+
+### 3. Responsibility/Agency
+:Agent rdf:type owl:Class ;
+    rdfs:label "Agent"@en ;
+    rdfs:comment "System or AI module assigned tasks"@en .
+
+:Actor rdf:type owl:Class ;
+    rdfs:label "Actor"@en ;
+    rdfs:comment "Human stakeholder with goals"@en .
+
+:Role rdf:type owl:Class ;
+    rdfs:label "Role"@en ;
+    rdfs:comment "Abstract responsibility label"@en .
+
+### 4. Obstacles (GORE-Risk Bridge)
+:Obstacle rdf:type owl:Class ;
+    rdfs:label "Obstacle"@en ;
+    rdfs:comment "Situation preventing goal satisfaction - bridges GORE and Risk concepts"@en .
+
+:AntiGoal rdf:type owl:Class ;
+    rdfs:subClassOf :Obstacle ;
+    rdfs:label "Anti-Goal"@en ;
+    rdfs:comment "Malicious actor's objective"@en .
+
+### 5. Means-Ends
+:Task rdf:type owl:Class ;
+    rdfs:label "Task"@en ;
+    rdfs:comment "Concrete action that achieves goals"@en .
+
+:Resource rdf:type owl:Class ;
+    rdfs:label "Resource"@en ;
+    rdfs:comment "Required or produced artifact"@en .
+
+:Plan rdf:type owl:Class ;
+    rdfs:label "Plan"@en ;
+    rdfs:comment "Strategy or workflow for achieving goals"@en .
+
+#################################################################
+#    Classes - Risk Taxonomy
+#################################################################
+
+### Core Risk Concepts (Extending AIRO)
+:Risk rdf:type owl:Class ;
+    rdfs:subClassOf airo:Risk ;
+    rdfs:label "AI System Risk"@en ;
+    rdfs:comment "AI-specific extension of AIRO Risk concept - potential for unwanted outcomes in AI systems caused by the combination of risk sources exploiting vulnerabilities"@en .
+
+:RiskSource rdf:type owl:Class ;
+    rdfs:subClassOf airo:RiskSource ;
+    rdfs:label "AI Risk Source"@en ;
+    rdfs:comment "AI-specific extension of AIRO RiskSource - factors that trigger or generate risk in AI systems"@en .
+
+:Vulnerability rdf:type owl:Class ;
+    rdfs:subClassOf airo:Vulnerability ;
+    rdfs:label "AI Vulnerability"@en ;
+    rdfs:comment "AI-specific extension of AIRO Vulnerability - weaknesses or flaws in AI assets that can be exploited by risk sources"@en .
+
+:Consequence rdf:type owl:Class ;
+    rdfs:subClassOf airo:Consequence ;
+    rdfs:label "AI Risk Consequence"@en ;
+    rdfs:comment "AI-specific extension of AIRO Consequence - direct effects of AI risk realization"@en .
+
+:RiskControl rdf:type owl:Class ;
+    rdfs:subClassOf airo:RiskControl ;
+    rdfs:label "AI Risk Control"@en ;
+    rdfs:comment "AI-specific extension of AIRO RiskControl - measures implemented to modify AI risks"@en .
+
+:Impact rdf:type owl:Class ;
+    rdfs:subClassOf airo:Impact ;
+    rdfs:label "AI Risk Impact"@en ;
+    rdfs:comment "AI-specific extension of AIRO Impact - types of harm caused by AI risks"@en .
+
+:Asset rdf:type owl:Class ;
+    rdfs:subClassOf airo:Asset ;
+    rdfs:label "AI Asset"@en ;
+    rdfs:comment "AI-specific extension of AIRO Asset - valuable objects in AI systems vulnerable to risk"@en .
+
+### ERA4AI-Specific Risk Concepts
+:AIRiskScenario rdf:type owl:Class ;
+    rdfs:label "AI Risk Scenario"@en ;
+    rdfs:comment "Specific scenario describing how AI risks can manifest in particular contexts"@en .
+
+:RiskPattern rdf:type owl:Class ;
+    rdfs:label "AI Risk Pattern"@en ;
+    rdfs:comment "Common recurring patterns of risk in AI systems"@en .
+
+:MitigationGoal rdf:type owl:Class ;
+    rdfs:subClassOf :Goal ;
+    rdfs:label "Mitigation Goal"@en ;
+    rdfs:comment "GORE-specific goal representing risk control objectives - bridges AIRO controls with GORE goals"@en .
+
+### AIRO-Extended Vulnerability Taxonomy
+:DataVulnerability rdf:type owl:Class ;
+    rdfs:subClassOf :Vulnerability ;
+    rdfs:subClassOf airo:DataVulnerability ;
+    rdfs:label "AI Data Vulnerability"@en ;
+    rdfs:comment "AI-specific data vulnerabilities extending AIRO data vulnerability concepts"@en .
+
+:ModelVulnerability rdf:type owl:Class ;
+    rdfs:subClassOf :Vulnerability ;
+    rdfs:subClassOf airo:AlgorithmVulnerability ;
+    rdfs:label "AI Model Vulnerability"@en ;
+    rdfs:comment "AI-specific model vulnerabilities extending AIRO algorithm vulnerability concepts"@en .
+
+:SystemVulnerability rdf:type owl:Class ;
+    rdfs:subClassOf :Vulnerability ;
+    rdfs:subClassOf airo:SystemVulnerability ;
+    rdfs:label "AI System Vulnerability"@en ;
+    rdfs:comment "AI-specific system vulnerabilities extending AIRO system vulnerability concepts"@en .
+
+:ProcessVulnerability rdf:type owl:Class ;
+    rdfs:subClassOf :Vulnerability ;
+    rdfs:subClassOf airo:ProcessVulnerability ;
+    rdfs:label "AI Process Vulnerability"@en ;
+    rdfs:comment "AI-specific process vulnerabilities extending AIRO process vulnerability concepts"@en .
+
+:HumanVulnerability rdf:type owl:Class ;
+    rdfs:subClassOf :Vulnerability ;
+    rdfs:subClassOf airo:HumanVulnerability ;
+    rdfs:label "AI Human Vulnerability"@en ;
+    rdfs:comment "AI-specific human vulnerabilities extending AIRO human vulnerability concepts"@en .
+
+### AIRO-Extended Risk Control Taxonomy
+:PreventiveControl rdf:type owl:Class ;
+    rdfs:subClassOf :RiskControl ;
+    rdfs:subClassOf airo:PreventiveControl ;
+    rdfs:label "AI Preventive Control"@en ;
+    rdfs:comment "AI-specific preventive controls extending AIRO preventive control concepts"@en .
+
+:DetectiveControl rdf:type owl:Class ;
+    rdfs:subClassOf :RiskControl ;
+    rdfs:subClassOf airo:DetectiveControl ;
+    rdfs:label "AI Detective Control"@en ;
+    rdfs:comment "AI-specific detective controls extending AIRO detective control concepts"@en .
+
+:CorrectiveControl rdf:type owl:Class ;
+    rdfs:subClassOf :RiskControl ;
+    rdfs:subClassOf airo:CorrectiveControl ;
+    rdfs:label "AI Corrective Control"@en ;
+    rdfs:comment "AI-specific corrective controls extending AIRO corrective control concepts"@en .
+
+:CompensatingControl rdf:type owl:Class ;
+    rdfs:subClassOf :RiskControl ;
+    rdfs:subClassOf airo:CompensatingControl ;
+    rdfs:label "AI Compensating Control"@en ;
+    rdfs:comment "AI-specific compensating controls extending AIRO compensating control concepts"@en .
+
+### AIRO-Extended Risk Source Taxonomy
+:ThreatAgent rdf:type owl:Class ;
+    rdfs:subClassOf :RiskSource ;
+    rdfs:subClassOf airo:ThreatAgent ;
+    rdfs:label "AI Threat Agent"@en ;
+    rdfs:comment "AI-specific threat agents extending AIRO threat agent concepts"@en .
+
+:Hazard rdf:type owl:Class ;
+    rdfs:subClassOf :RiskSource ;
+    rdfs:subClassOf airo:Hazard ;
+    rdfs:label "AI Hazard"@en ;
+    rdfs:comment "AI-specific hazards extending AIRO hazard concepts"@en .
+
+### AIRO-Extended Asset Taxonomy
+:DataAsset rdf:type owl:Class ;
+    rdfs:subClassOf :Asset ;
+    rdfs:subClassOf airo:DataAsset ;
+    rdfs:label "AI Data Asset"@en ;
+    rdfs:comment "AI-specific data assets extending AIRO data asset concepts"@en .
+
+:ModelAsset rdf:type owl:Class ;
+    rdfs:subClassOf :Asset ;
+    rdfs:subClassOf airo:SoftwareAsset ;
+    rdfs:label "AI Model Asset"@en ;
+    rdfs:comment "AI models as software assets extending AIRO software asset concepts"@en .
+
+:SystemAsset rdf:type owl:Class ;
+    rdfs:subClassOf :Asset ;
+    rdfs:subClassOf airo:SystemAsset ;
+    rdfs:label "AI System Asset"@en ;
+    rdfs:comment "AI-specific system assets extending AIRO system asset concepts"@en .
+
+:HumanAsset rdf:type owl:Class ;
+    rdfs:subClassOf :Asset ;
+    rdfs:subClassOf airo:HumanAsset ;
+    rdfs:label "AI Human Asset"@en ;
+    rdfs:comment "AI-specific human assets extending AIRO human asset concepts"@en .
+
+### AIRO-Extended Impact Taxonomy
+:OperationalImpact rdf:type owl:Class ;
+    rdfs:subClassOf :Impact ;
+    rdfs:subClassOf airo:OperationalImpact ;
+    rdfs:label "AI Operational Impact"@en ;
+    rdfs:comment "AI-specific operational impacts extending AIRO operational impact concepts"@en .
+
+:SafetyImpact rdf:type owl:Class ;
+    rdfs:subClassOf :Impact ;
+    rdfs:subClassOf airo:SafetyImpact ;
+    rdfs:label "AI Safety Impact"@en ;
+    rdfs:comment "AI-specific safety impacts extending AIRO safety impact concepts"@en .
+
+:PrivacyImpact rdf:type owl:Class ;
+    rdfs:subClassOf :Impact ;
+    rdfs:subClassOf airo:PrivacyImpact ;
+    rdfs:label "AI Privacy Impact"@en ;
+    rdfs:comment "AI-specific privacy impacts extending AIRO privacy impact concepts"@en .
+
+:LegalComplianceImpact rdf:type owl:Class ;
+    rdfs:subClassOf :Impact ;
+    rdfs:subClassOf airo:LegalImpact ;
+    rdfs:label "AI Legal/Compliance Impact"@en ;
+    rdfs:comment "AI-specific legal impacts extending AIRO legal impact concepts"@en .
+
+:FinancialImpact rdf:type owl:Class ;
+    rdfs:subClassOf :Impact ;
+    rdfs:subClassOf airo:FinancialImpact ;
+    rdfs:label "AI Financial Impact"@en ;
+    rdfs:comment "AI-specific financial impacts extending AIRO financial impact concepts"@en .
+
+:ReputationalImpact rdf:type owl:Class ;
+    rdfs:subClassOf :Impact ;
+    rdfs:subClassOf airo:ReputationalImpact ;
+    rdfs:label "AI Reputational Impact"@en ;
+    rdfs:comment "AI-specific reputational impacts extending AIRO reputational impact concepts"@en .
+
+### ERA4AI-Specific Extensions (Novel AI Risk Concepts)
+:FairnessEthicsImpact rdf:type owl:Class ;
+    rdfs:subClassOf :Impact ;
+    rdfs:label "AI Fairness/Ethics Impact"@en ;
+    rdfs:comment "Impact on fairness and ethical considerations specific to AI systems"@en .
+
+:TrustPsychologicalImpact rdf:type owl:Class ;
+    rdfs:subClassOf :Impact ;
+    rdfs:label "AI Trust/Psychological Impact"@en ;
+    rdfs:comment "Impact on user trust and psychological well-being specific to AI interactions"@en .
+
+:SocietalImpact rdf:type owl:Class ;
+    rdfs:subClassOf :Impact ;
+    rdfs:label "AI Societal Impact"@en ;
+    rdfs:comment "Broader societal impacts of AI systems"@en .
+
+:EnvironmentalImpact rdf:type owl:Class ;
+    rdfs:subClassOf :Impact ;
+    rdfs:label "AI Environmental Impact"@en ;
+    rdfs:comment "Environmental impacts of AI systems (e.g., carbon footprint)"@en .
+
+### AI-Specific Risk Source Extensions
+
+### AI-Specific Risk Source Extensions
+:DataRelatedRisk rdf:type owl:Class ;
+    rdfs:subClassOf :RiskSource ;
+    rdfs:subClassOf airo:DataThreat ;
+    rdfs:label "AI Data-Related Risk Source"@en ;
+    rdfs:comment "AI-specific data-related risks extending AIRO data threat concepts"@en .
+
+:ModelRelatedRisk rdf:type owl:Class ;
+    rdfs:subClassOf :RiskSource ;
+    rdfs:subClassOf airo:AlgorithmThreat ;
+    rdfs:label "AI Model-Related Risk Source"@en ;
+    rdfs:comment "AI-specific model-related risks extending AIRO algorithm threat concepts"@en .
+
+:SystemIntegrationRisk rdf:type owl:Class ;
+    rdfs:subClassOf :RiskSource ;
+    rdfs:subClassOf airo:SystemThreat ;
+    rdfs:label "AI System/Integration Risk Source"@en ;
+    rdfs:comment "AI-specific system integration risks extending AIRO system threat concepts"@en .
+
+:HumanOrganizationalRisk rdf:type owl:Class ;
+    rdfs:subClassOf :RiskSource ;
+    rdfs:subClassOf airo:HumanThreat ;
+    rdfs:label "AI Human/Organizational Risk Source"@en ;
+    rdfs:comment "AI-specific human/organizational risks extending AIRO human threat concepts"@en .
+
+:EnvironmentalContextualRisk rdf:type owl:Class ;
+    rdfs:subClassOf :RiskSource ;
+    rdfs:subClassOf airo:EnvironmentalThreat ;
+    rdfs:label "AI Environmental/Contextual Risk Source"@en ;
+    rdfs:comment "AI-specific environmental risks extending AIRO environmental threat concepts"@en .
+
+### Data-Related Risk Subtypes
+:DataQualityIssue rdf:type owl:Class ;
+    rdfs:subClassOf :DataRelatedRisk ;
+    rdfs:label "Data Quality Issue"@en .
+
+:DataBias rdf:type owl:Class ;
+    rdfs:subClassOf :DataRelatedRisk ;
+    rdfs:label "Data Bias"@en .
+
+:DataDrift rdf:type owl:Class ;
+    rdfs:subClassOf :DataRelatedRisk ;
+    rdfs:label "Data Drift"@en .
+
+:ConceptDrift rdf:type owl:Class ;
+    rdfs:subClassOf :DataRelatedRisk ;
+    rdfs:label "Concept Drift"@en .
+
+:PrivacyLeakage rdf:type owl:Class ;
+    rdfs:subClassOf :DataRelatedRisk ;
+    rdfs:label "Privacy Leakage"@en .
+
+### Model-Related Risk Subtypes
+:Hallucination rdf:type owl:Class ;
+    rdfs:subClassOf :ModelRelatedRisk ;
+    rdfs:label "Hallucination"@en .
+
+:MisleadingOutput rdf:type owl:Class ;
+    rdfs:subClassOf :ModelRelatedRisk ;
+    rdfs:label "Misleading Output"@en .
+
+:ShortcutLearning rdf:type owl:Class ;
+    rdfs:subClassOf :ModelRelatedRisk ;
+    rdfs:label "Shortcut Learning"@en .
+
+:SpuriousCorrelation rdf:type owl:Class ;
+    rdfs:subClassOf :ModelRelatedRisk ;
+    rdfs:label "Spurious Correlation"@en .
+
+:ModelDrift rdf:type owl:Class ;
+    rdfs:subClassOf :ModelRelatedRisk ;
+    rdfs:label "Model Drift/Degradation"@en .
+
+:CalibrationError rdf:type owl:Class ;
+    rdfs:subClassOf :ModelRelatedRisk ;
+    rdfs:label "Calibration Error"@en .
+
+:ExplainabilityGap rdf:type owl:Class ;
+    rdfs:subClassOf :ModelRelatedRisk ;
+    rdfs:label "Explainability Gap"@en .
+
+### Human/Organizational Risk Subtypes
+:Overreliance rdf:type owl:Class ;
+    rdfs:subClassOf :HumanOrganizationalRisk ;
+    rdfs:label "Overreliance"@en .
+
+:Misuse rdf:type owl:Class ;
+    rdfs:subClassOf :HumanOrganizationalRisk ;
+    rdfs:label "Misuse"@en .
+
+:Misinterpretation rdf:type owl:Class ;
+    rdfs:subClassOf :HumanOrganizationalRisk ;
+    rdfs:label "Misinterpretation"@en .
+
+:RequirementAmbiguity rdf:type owl:Class ;
+    rdfs:subClassOf :HumanOrganizationalRisk ;
+    rdfs:label "Requirement Ambiguity"@en .
+
+:GovernanceFailure rdf:type owl:Class ;
+    rdfs:subClassOf :HumanOrganizationalRisk ;
+    rdfs:label "Governance Failure"@en .
+
+### Environmental/Contextual Risk Subtypes
+:RegulatoryConstraint rdf:type owl:Class ;
+    rdfs:subClassOf :EnvironmentalContextualRisk ;
+    rdfs:label "Regulatory Constraint"@en .
+
+:AdversarialAttack rdf:type owl:Class ;
+    rdfs:subClassOf :EnvironmentalContextualRisk ;
+    rdfs:label "Adversarial Attack"@en .
+
+:DomainShift rdf:type owl:Class ;
+    rdfs:subClassOf :EnvironmentalContextualRisk ;
+    rdfs:label "Domain Shift"@en .
+
+### AIRO-Extended Risk Categories and Levels
+:AIRiskLevel rdf:type owl:Class ;
+    rdfs:subClassOf airo:RiskLevel ;
+    rdfs:label "AI Risk Level"@en ;
+    rdfs:comment "AI-specific risk levels extending AIRO risk level taxonomy"@en .
+
+:CriticalAIRisk rdf:type owl:Class ;
+    rdfs:subClassOf :AIRiskLevel ;
+    rdfs:subClassOf airo:CriticalRisk ;
+    rdfs:label "Critical AI Risk"@en ;
+    rdfs:comment "Highest level AI risks requiring immediate attention"@en .
+
+:HighAIRisk rdf:type owl:Class ;
+    rdfs:subClassOf :AIRiskLevel ;
+    rdfs:subClassOf airo:HighRisk ;
+    rdfs:label "High AI Risk"@en ;
+    rdfs:comment "High-level AI risks requiring prompt mitigation"@en .
+
+:MediumAIRisk rdf:type owl:Class ;
+    rdfs:subClassOf :AIRiskLevel ;
+    rdfs:subClassOf airo:MediumRisk ;
+    rdfs:label "Medium AI Risk"@en ;
+    rdfs:comment "Medium-level AI risks requiring planned mitigation"@en .
+
+:LowAIRisk rdf:type owl:Class ;
+    rdfs:subClassOf :AIRiskLevel ;
+    rdfs:subClassOf airo:LowRisk ;
+    rdfs:label "Low AI Risk"@en ;
+    rdfs:comment "Low-level AI risks requiring monitoring"@en .
+
+:AIRiskCategory rdf:type owl:Class ;
+    rdfs:subClassOf airo:RiskCategory ;
+    rdfs:label "AI Risk Category"@en ;
+    rdfs:comment "AI-specific risk categories extending AIRO risk category taxonomy"@en .
+
+:TechnicalAIRisk rdf:type owl:Class ;
+    rdfs:subClassOf :AIRiskCategory ;
+    rdfs:subClassOf airo:TechnicalRisk ;
+    rdfs:label "Technical AI Risk"@en ;
+    rdfs:comment "Technical risks specific to AI systems"@en .
+
+:EthicalAIRisk rdf:type owl:Class ;
+    rdfs:subClassOf :AIRiskCategory ;
+    rdfs:label "Ethical AI Risk"@en ;
+    rdfs:comment "Risks related to AI ethics and fairness"@en .
+
+:RegulatoryAIRisk rdf:type owl:Class ;
+    rdfs:subClassOf :AIRiskCategory ;
+    rdfs:subClassOf airo:ComplianceRisk ;
+    rdfs:label "Regulatory AI Risk"@en ;
+    rdfs:comment "AI compliance and regulatory risks"@en .
+
+:OperationalAIRisk rdf:type owl:Class ;
+    rdfs:subClassOf :AIRiskCategory ;
+    rdfs:subClassOf airo:OperationalRisk ;
+    rdfs:label "Operational AI Risk"@en ;
+    rdfs:comment "Operational risks in AI system deployment and maintenance"@en .
+
+### 2. Lifecycle Taxonomy
+
+### Domain Shift Subtypes
+:DistributionShift rdf:type owl:Class ;
+    rdfs:subClassOf :DomainShift ;
+    rdfs:label "Distribution Shift"@en ;
+    rdfs:comment "Change in data distribution between training and deployment"@en .
+
+:PopulationShift rdf:type owl:Class ;
+    rdfs:subClassOf :DomainShift ;
+    rdfs:label "Population Shift"@en ;
+    rdfs:comment "Change in target population characteristics"@en .
+
+### Specific AI Vulnerabilities
+:AdversarialVulnerability rdf:type owl:Class ;
+    rdfs:subClassOf :ModelVulnerability ;
+    rdfs:label "Adversarial Vulnerability"@en ;
+    rdfs:comment "Model susceptibility to adversarial examples and attacks"@en .
+
+:BiasVulnerability rdf:type owl:Class ;
+    rdfs:subClassOf :DataVulnerability ;
+    rdfs:label "Bias Vulnerability"@en ;
+    rdfs:comment "Susceptibility to biased outcomes due to biased training data or algorithms"@en .
+
+:PrivacyVulnerability rdf:type owl:Class ;
+    rdfs:subClassOf :DataVulnerability ;
+    rdfs:label "Privacy Vulnerability"@en ;
+    rdfs:comment "Risk of privacy breaches through data leakage or inference attacks"@en .
+
+:RobustnessVulnerability rdf:type owl:Class ;
+    rdfs:subClassOf :ModelVulnerability ;
+    rdfs:label "Robustness Vulnerability"@en ;
+    rdfs:comment "Lack of model stability under input variations or distributional shifts"@en .
+
+:ExplainabilityVulnerability rdf:type owl:Class ;
+    rdfs:subClassOf :ModelVulnerability ;
+    rdfs:label "Explainability Vulnerability"@en ;
+    rdfs:comment "Inability to provide adequate explanations for model decisions"@en .
+
+:GovernanceVulnerability rdf:type owl:Class ;
+    rdfs:subClassOf :ProcessVulnerability ;
+    rdfs:label "Governance Vulnerability"@en ;
+    rdfs:comment "Weaknesses in AI governance frameworks and oversight processes"@en .
+
+### 2. Lifecycle Taxonomy
+:LifecycleStage rdf:type owl:Class ;
+    rdfs:label "Lifecycle Stage"@en .
+
+:RequirementsGovernanceStage rdf:type owl:Class ;
+    rdfs:subClassOf :LifecycleStage ;
+    rdfs:label "Requirements & Governance Stage"@en .
+
+:DataCollectionStage rdf:type owl:Class ;
+    rdfs:subClassOf :LifecycleStage ;
+    rdfs:label "Data Collection Stage"@en .
+
+:DataPreparationStage rdf:type owl:Class ;
+    rdfs:subClassOf :LifecycleStage ;
+    rdfs:label "Data Preparation Stage"@en .
+
+:ModelTrainingStage rdf:type owl:Class ;
+    rdfs:subClassOf :LifecycleStage ;
+    rdfs:label "Model Training Stage"@en .
+
+:ValidationTestingStage rdf:type owl:Class ;
+    rdfs:subClassOf :LifecycleStage ;
+    rdfs:label "Validation & Testing Stage"@en .
+
+:ArchitectureCompositionStage rdf:type owl:Class ;
+    rdfs:subClassOf :LifecycleStage ;
+    rdfs:label "Architecture Composition Stage"@en .
+
+:DeploymentStage rdf:type owl:Class ;
+    rdfs:subClassOf :LifecycleStage ;
+    rdfs:label "Deployment Stage"@en .
+
+:OperationMonitoringStage rdf:type owl:Class ;
+    rdfs:subClassOf :LifecycleStage ;
+    rdfs:label "Operation & Monitoring Stage"@en .
+
+:RetrainingAdaptationStage rdf:type owl:Class ;
+    rdfs:subClassOf :LifecycleStage ;
+    rdfs:label "Retraining & Adaptation Stage"@en .
+
+:HumanDecisionStage rdf:type owl:Class ;
+    rdfs:subClassOf :LifecycleStage ;
+    rdfs:label "Human-facing Decision Stage"@en .
+
+:DecommissioningStage rdf:type owl:Class ;
+    rdfs:subClassOf :LifecycleStage ;
+    rdfs:label "Decommissioning/Retirement Stage"@en .
+
+### 3. Asset/Object Taxonomy (AIRO-Extended)
+# Note: Main asset classes are defined above in AIRO-Extended Asset Taxonomy section
+
+:DecisionAsset rdf:type owl:Class ;
+    rdfs:subClassOf :SystemAsset ;
+    rdfs:label "AI Decision Asset"@en ;
+    rdfs:comment "AI predictions, classifications, and automated decisions as system assets"@en .
+
+:StakeholderAsset rdf:type owl:Class ;
+    rdfs:subClassOf :HumanAsset ;
+    rdfs:label "AI Stakeholder Asset"@en ;
+    rdfs:comment "AI stakeholders (users, employees, customers) as human assets"@en .
+
+:OrganizationalAsset rdf:type owl:Class ;
+    rdfs:subClassOf :Asset ;
+    rdfs:subClassOf airo:OrganizationalAsset ;
+    rdfs:label "AI Organizational Asset"@en ;
+    rdfs:comment "AI-related organizational assets (reputation, legal standing, finances)"@en .
+
+### 4. Impact Taxonomy (AIRO-Extended)
+# Note: Main impact classes are defined above in AIRO-Extended Impact Taxonomy section
+# This section is maintained for backward compatibility and additional AI-specific impacts
+
+### 5. Context Taxonomy
+:Context rdf:type owl:Class ;
+    rdfs:label "Context"@en ;
+    rdfs:comment "Contextual dimension affecting risk"@en .
+
+:Domain rdf:type owl:Class ;
+    rdfs:label "Domain"@en ;
+    rdfs:comment "Application domain (healthcare, finance, etc.)"@en .
+
+:DeploymentSetting rdf:type owl:Class ;
+    rdfs:label "Deployment Setting"@en .
+
+:RegulatorySensitivity rdf:type owl:Class ;
+    rdfs:label "Regulatory Sensitivity"@en .
+
+:Intentionality rdf:type owl:Class ;
+    rdfs:label "Intentionality"@en ;
+    rdfs:comment "Whether risk is accidental, malicious, or adversarial"@en .
+
+:ImpactScope rdf:type owl:Class ;
+    rdfs:label "Impact Scope"@en ;
+    rdfs:comment "Scale of impact: individual, group, organizational, societal, global"@en .
+
+#################################################################
+#    Individuals (Examples)
+#################################################################
+
+### Example Domains
+:Healthcare rdf:type owl:NamedIndividual , :Domain ;
+    rdfs:label "Healthcare"@en .
+
+:Finance rdf:type owl:NamedIndividual , :Domain ;
+    rdfs:label "Finance"@en .
+
+:PublicSector rdf:type owl:NamedIndividual , :Domain ;
+    rdfs:label "Public Sector"@en .
+
+### Example Roles
+:Reviewer rdf:type owl:NamedIndividual , :Role ;
+    rdfs:label "Reviewer"@en .
+
+:Approver rdf:type owl:NamedIndividual , :Role ;
+    rdfs:label "Approver"@en .
+
+:DecisionMaker rdf:type owl:NamedIndividual , :Role ;
+    rdfs:label "Decision Maker"@en .
+
+### Example Agents
+:LLMModule rdf:type owl:NamedIndividual , :Agent ;
+    rdfs:label "LLM Module"@en .
+
+:KnowledgeGraphRetriever rdf:type owl:NamedIndividual , :Agent ;
+    rdfs:label "Knowledge Graph Retriever"@en .
+
+### Example Risk Controls (AIRO-extended)
+:DataValidationControl rdf:type owl:NamedIndividual , :PreventiveControl ;
+    rdfs:label "Data Validation Control"@en ;
+    rdfs:comment "Preventive control extending AIRO to ensure AI data quality and integrity"@en ;
+    airo:controlMaturity "Optimized"@en ;
+    :controlEffectiveness 0.85 .
+
+:AdversarialDetection rdf:type owl:NamedIndividual , :DetectiveControl ;
+    rdfs:label "Adversarial Attack Detection"@en ;
+    rdfs:comment "Detective control extending AIRO to identify adversarial inputs in AI systems"@en ;
+    airo:controlMaturity "Managed"@en ;
+    :controlEffectiveness 0.75 .
+
+:ModelMonitoring rdf:type owl:NamedIndividual , :DetectiveControl ;
+    rdfs:label "AI Model Performance Monitoring"@en ;
+    rdfs:comment "Detective control extending AIRO to monitor AI model drift and degradation"@en ;
+    airo:controlMaturity "Defined"@en ;
+    :controlEffectiveness 0.80 .
+
+:BiasCorrection rdf:type owl:NamedIndividual , :CorrectiveControl ;
+    rdfs:label "AI Bias Correction Mechanism"@en ;
+    rdfs:comment "Corrective control extending AIRO to address detected bias in AI outputs"@en ;
+    airo:controlMaturity "Managed"@en ;
+    :controlEffectiveness 0.70 .
+
+:PrivacyPreservation rdf:type owl:NamedIndividual , :PreventiveControl ;
+    rdfs:label "AI Privacy Preservation Control"@en ;
+    rdfs:comment "Preventive control extending AIRO implementing differential privacy for AI systems"@en ;
+    airo:controlMaturity "Optimized"@en ;
+    :controlEffectiveness 0.90 .
+
+### Example Vulnerabilities (AIRO-extended)
+:TrainingDataBias rdf:type owl:NamedIndividual , :BiasVulnerability ;
+    rdfs:label "AI Training Data Bias"@en ;
+    rdfs:comment "Systematic bias in AI training datasets extending AIRO data vulnerability"@en ;
+    airo:vulnerabilityScore 7.5 ;
+    :exploitabilityLevel "Medium"@en .
+
+:MembershipInference rdf:type owl:NamedIndividual , :PrivacyVulnerability ;
+    rdfs:label "AI Membership Inference Vulnerability"@en ;
+    rdfs:comment "Vulnerability to membership inference attacks extending AIRO privacy vulnerability"@en ;
+    airo:vulnerabilityScore 6.0 ;
+    :exploitabilityLevel "High"@en .
+
+:InputPerturbation rdf:type owl:NamedIndividual , :AdversarialVulnerability ;
+    rdfs:label "AI Input Perturbation Vulnerability"@en ;
+    rdfs:comment "Susceptibility to adversarial perturbations extending AIRO algorithm vulnerability"@en ;
+    airo:vulnerabilityScore 8.0 ;
+    :exploitabilityLevel "High"@en .
+
+### Example AI Risk Scenarios
+:MedicalDiagnosisBias rdf:type owl:NamedIndividual , :AIRiskScenario ;
+    rdfs:label "Medical AI Diagnosis Bias Scenario"@en ;
+    rdfs:comment "Risk scenario where AI medical diagnosis shows bias against certain demographics"@en .
+
+:FinancialLoanDiscrimination rdf:type owl:NamedIndividual , :AIRiskScenario ;
+    rdfs:label "Financial AI Loan Discrimination Scenario"@en ;
+    rdfs:comment "Risk scenario where AI loan approval systems discriminate based on protected characteristics"@en .
+
+### Example AI Assets (AIRO-extended)
+:PatientDataSet rdf:type owl:NamedIndividual , :DataAsset ;
+    rdfs:label "Patient Medical Data Set"@en ;
+    rdfs:comment "Medical data asset extending AIRO data asset for healthcare AI"@en ;
+    :aiModelType "Healthcare Data"@en ;
+    :trainingDataSize 1000000 .
+
+:DiagnosticAIModel rdf:type owl:NamedIndividual , :ModelAsset ;
+    rdfs:label "Medical Diagnostic AI Model"@en ;
+    rdfs:comment "AI model asset extending AIRO software asset for medical diagnosis"@en ;
+    :aiModelType "Convolutional Neural Network"@en .
+
+### Example Risk Instances (AIRO-extended)
+:BiasedDiagnosisRisk rdf:type owl:NamedIndividual , :Risk ;
+    rdfs:label "Biased Medical Diagnosis Risk"@en ;
+    rdfs:comment "Risk of biased medical diagnosis extending AIRO risk concepts"@en ;
+    airo:riskScore 7.5 ;
+    airo:probabilityOfOccurrence 0.3 ;
+    :hasRiskLevel :HighAIRisk ;
+    :hasRiskCategory :EthicalAIRisk .
+
+#################################################################
+#    End of Ontology
+#################################################################

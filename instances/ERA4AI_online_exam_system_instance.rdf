@@ -1,0 +1,818 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+         xmlns:era4ai="http://www.semanticweb.org/ontologies/era4ai#"
+         xmlns:airo="https://w3id.org/airo#">
+
+<!-- ================================================================== -->
+<!--                     ONLINE EXAMINATION SYSTEM                     -->
+<!--                     ERA4AI ONTOLOGY INSTANCES                     -->
+<!-- ================================================================== -->
+
+<!-- =================== STRATEGIC GOALS =================== -->
+
+<!-- Main System Goal -->
+<rdf:Description rdf:about="http://example.org/oes#G_ModernizeExamination">
+  <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/era4ai#StrategicGoal"/>
+  <era4ai:hasName>Modernize Standardized Testing</era4ai:hasName>
+  <era4ai:hasDescription>Replace paper-based exams with a secure, scalable digital platform for government organization</era4ai:hasDescription>
+</rdf:Description>
+
+<!-- Security Goals -->
+<rdf:Description rdf:about="http://example.org/oes#G_SecureExamination">
+  <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/era4ai#ValueGoal"/>
+  <era4ai:hasName>Ensure Exam Security and Integrity</era4ai:hasName>
+  <era4ai:hasDescription>Maintain the highest level of security and prevent cheating during examinations</era4ai:hasDescription>
+  <era4ai:refinesGoal rdf:resource="http://example.org/oes#G_ModernizeExamination"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://example.org/oes#G_DataPrivacy">
+  <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/era4ai#ValueGoal"/>
+  <era4ai:hasName>Protect Candidate Data Privacy</era4ai:hasName>
+  <era4ai:hasDescription>Ensure GDPR compliance and secure handling of personal data</era4ai:hasDescription>
+  <era4ai:refinesGoal rdf:resource="http://example.org/oes#G_ModernizeExamination"/>
+</rdf:Description>
+
+<!-- Performance Goals -->
+<rdf:Description rdf:about="http://example.org/oes#G_Scalability">
+  <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/era4ai#Softgoal"/>
+  <era4ai:hasName>Support 100,000 Concurrent Users</era4ai:hasName>
+  <era4ai:hasDescription>System must handle peak loads of up to 100,000 simultaneous users</era4ai:hasDescription>
+  <era4ai:hasSatisfactionLevel>High</era4ai:hasSatisfactionLevel>
+  <era4ai:refinesGoal rdf:resource="http://example.org/oes#G_ModernizeExamination"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://example.org/oes#G_ResponseTime">
+  <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/era4ai#Softgoal"/>
+  <era4ai:hasName>Maintain Fast Response Times</era4ai:hasName>
+  <era4ai:hasDescription>Database queries within 2 seconds, server response under 3 seconds</era4ai:hasDescription>
+  <era4ai:hasSatisfactionLevel>High</era4ai:hasSatisfactionLevel>
+</rdf:Description>
+
+<!-- AI-Specific Goals -->
+<rdf:Description rdf:about="http://example.org/oes#G_AIProctoring">
+  <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/era4ai#FunctionalGoal"/>
+  <era4ai:hasName>Implement AI-Powered Proctoring</era4ai:hasName>
+  <era4ai:hasDescription>Use facial recognition and cheating detection for exam integrity</era4ai:hasDescription>
+  <era4ai:refinesGoal rdf:resource="http://example.org/oes#G_SecureExamination"/>
+</rdf:Description>
+
+<!-- =================== ACTORS AND ROLES =================== -->
+
+<rdf:Description rdf:about="http://example.org/oes#Actor_Admin">
+  <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/era4ai#Actor"/>
+  <era4ai:hasName>System Administrator</era4ai:hasName>
+  <era4ai:hasRole rdf:resource="http://example.org/oes#Role_ExamManager"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://example.org/oes#Actor_Candidate">
+  <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/era4ai#Actor"/>
+  <era4ai:hasName>Exam Candidate</era4ai:hasName>
+  <era4ai:hasRole rdf:resource="http://example.org/oes#Role_ExamTaker"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://example.org/oes#Actor_Proctor">
+  <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/era4ai#Actor"/>
+  <era4ai:hasName>Human Proctor</era4ai:hasName>
+  <era4ai:hasRole rdf:resource="http://example.org/oes#Role_ExamSupervisor"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://example.org/oes#Role_ExamManager">
+  <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/era4ai#Role"/>
+  <era4ai:hasName>Exam Manager</era4ai:hasName>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://example.org/oes#Role_ExamTaker">
+  <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/era4ai#Role"/>
+  <era4ai:hasName>Exam Taker</era4ai:hasName>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://example.org/oes#Role_ExamSupervisor">
+  <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/era4ai#Role"/>
+  <era4ai:hasName>Exam Supervisor</era4ai:hasName>
+</rdf:Description>
+
+<!-- =================== AGENTS (AI COMPONENTS) =================== -->
+
+<rdf:Description rdf:about="http://example.org/oes#Agent_FacialRecognition">
+  <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/era4ai#Agent"/>
+  <era4ai:hasName>Facial Recognition AI Module</era4ai:hasName>
+  <era4ai:hasDescription>AI agent for candidate identity verification using facial recognition</era4ai:hasDescription>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://example.org/oes#Agent_CheatingDetection">
+  <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/era4ai#Agent"/>
+  <era4ai:hasName>Cheating Detection AI Module</era4ai:hasName>
+  <era4ai:hasDescription>AI agent for monitoring suspicious activities during exams</era4ai:hasDescription>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://example.org/oes#Agent_AutoGrading">
+  <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/era4ai#Agent"/>
+  <era4ai:hasName>Automated Grading System</era4ai:hasName>
+  <era4ai:hasDescription>AI agent for automatically grading objective questions</era4ai:hasDescription>
+</rdf:Description>
+
+<!-- =================== ASSETS =================== -->
+
+<!-- Data Assets -->
+<rdf:Description rdf:about="http://example.org/oes#Asset_CandidateData">
+  <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/era4ai#DataAsset"/>
+  <era4ai:hasName>Candidate Personal Data</era4ai:hasName>
+  <era4ai:hasDescription>Personal information, credentials, and exam history of candidates</era4ai:hasDescription>
+  <era4ai:trainingDataSize>0</era4ai:trainingDataSize>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://example.org/oes#Asset_QuestionBank">
+  <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/era4ai#DataAsset"/>
+  <era4ai:hasName>Question Bank Database</era4ai:hasName>
+  <era4ai:hasDescription>Repository of exam questions, answers, and grading criteria</era4ai:hasDescription>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://example.org/oes#Asset_ExamResults">
+  <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/era4ai#DataAsset"/>
+  <era4ai:hasName>Exam Results and Scores</era4ai:hasName>
+  <era4ai:hasDescription>Candidate performance data, scores, and rankings</era4ai:hasDescription>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://example.org/oes#Asset_ProctoringData">
+  <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/era4ai#DataAsset"/>
+  <era4ai:hasName>Proctoring Video and Audio Data</era4ai:hasName>
+  <era4ai:hasDescription>Video recordings and audio captured during proctored exams</era4ai:hasDescription>
+</rdf:Description>
+
+<!-- Model Assets -->
+<rdf:Description rdf:about="http://example.org/oes#Asset_FacialRecModel">
+  <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/era4ai#ModelAsset"/>
+  <era4ai:hasName>Facial Recognition AI Model</era4ai:hasName>
+  <era4ai:hasDescription>Pre-trained model for facial recognition and identity verification</era4ai:hasDescription>
+  <era4ai:aiModelType>Convolutional Neural Network</era4ai:aiModelType>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://example.org/oes#Asset_CheatingDetModel">
+  <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/era4ai#ModelAsset"/>
+  <era4ai:hasName>Cheating Detection AI Model</era4ai:hasName>
+  <era4ai:hasDescription>Machine learning model for detecting suspicious behaviors</era4ai:hasDescription>
+  <era4ai:aiModelType>Deep Learning Classifier</era4ai:aiModelType>
+</rdf:Description>
+
+<!-- System Assets -->
+<rdf:Description rdf:about="http://example.org/oes#Asset_ExamPlatform">
+  <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/era4ai#SystemAsset"/>
+  <era4ai:hasName>Online Examination Platform</era4ai:hasName>
+  <era4ai:hasDescription>Web-based platform for conducting online examinations</era4ai:hasDescription>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://example.org/oes#Asset_Database">
+  <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/era4ai#SystemAsset"/>
+  <era4ai:hasName>OES Database System</era4ai:hasName>
+  <era4ai:hasDescription>MySQL/PostgreSQL database storing all system data</era4ai:hasDescription>
+</rdf:Description>
+
+<!-- Human Assets -->
+<rdf:Description rdf:about="http://example.org/oes#Asset_ExamCandidates">
+  <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/era4ai#StakeholderAsset"/>
+  <era4ai:hasName>Exam Candidates</era4ai:hasName>
+  <era4ai:hasDescription>Individuals taking examinations through the platform</era4ai:hasDescription>
+</rdf:Description>
+
+<!-- =================== VULNERABILITIES =================== -->
+
+<!-- Data Vulnerabilities -->
+<rdf:Description rdf:about="http://example.org/oes#Vuln_DataBreach">
+  <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/era4ai#PrivacyVulnerability"/>
+  <era4ai:hasName>Personal Data Breach Vulnerability</era4ai:hasName>
+  <era4ai:hasDescription>Risk of unauthorized access to candidate personal information</era4ai:hasDescription>
+  <era4ai:vulnerabilityScore>8.5</era4ai:vulnerabilityScore>
+  <era4ai:exploitabilityLevel>High</era4ai:exploitabilityLevel>
+  <era4ai:exposesAsset rdf:resource="http://example.org/oes#Asset_CandidateData"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://example.org/oes#Vuln_QuestionLeakage">
+  <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/era4ai#DataVulnerability"/>
+  <era4ai:hasName>Question Bank Leakage</era4ai:hasName>
+  <era4ai:hasDescription>Risk of exam questions being exposed before examinations</era4ai:hasDescription>
+  <era4ai:vulnerabilityScore>9.0</era4ai:vulnerabilityScore>
+  <era4ai:exploitabilityLevel>High</era4ai:exploitabilityLevel>
+  <era4ai:exposesAsset rdf:resource="http://example.org/oes#Asset_QuestionBank"/>
+</rdf:Description>
+
+<!-- Model Vulnerabilities -->
+<rdf:Description rdf:about="http://example.org/oes#Vuln_FacialSpoofing">
+  <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/era4ai#AdversarialVulnerability"/>
+  <era4ai:hasName>Facial Recognition Spoofing</era4ai:hasName>
+  <era4ai:hasDescription>Vulnerability to photo/video spoofing attacks against facial recognition</era4ai:hasDescription>
+  <era4ai:vulnerabilityScore>7.0</era4ai:vulnerabilityScore>
+  <era4ai:exploitabilityLevel>Medium</era4ai:exploitabilityLevel>
+  <era4ai:exposesAsset rdf:resource="http://example.org/oes#Asset_FacialRecModel"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://example.org/oes#Vuln_FalsePositives">
+  <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/era4ai#RobustnessVulnerability"/>
+  <era4ai:hasName>Cheating Detection False Positives</era4ai:hasName>
+  <era4ai:hasDescription>AI model incorrectly flagging legitimate behaviors as cheating</era4ai:hasDescription>
+  <era4ai:vulnerabilityScore>6.5</era4ai:vulnerabilityScore>
+  <era4ai:exploitabilityLevel>Medium</era4ai:exploitabilityLevel>
+  <era4ai:exposesAsset rdf:resource="http://example.org/oes#Asset_CheatingDetModel"/>
+</rdf:Description>
+
+<!-- System Vulnerabilities -->
+<rdf:Description rdf:about="http://example.org/oes#Vuln_SystemOverload">
+  <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/era4ai#SystemVulnerability"/>
+  <era4ai:hasName>System Performance Degradation</era4ai:hasName>
+  <era4ai:hasDescription>System failure under peak load of 100,000 concurrent users</era4ai:hasDescription>
+  <era4ai:vulnerabilityScore>7.5</era4ai:vulnerabilityScore>
+  <era4ai:exploitabilityLevel>Medium</era4ai:exploitabilityLevel>
+  <era4ai:exposesAsset rdf:resource="http://example.org/oes#Asset_ExamPlatform"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://example.org/oes#Vuln_DatabaseInjection">
+  <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/era4ai#SystemVulnerability"/>
+  <era4ai:hasName>SQL Injection Vulnerability</era4ai:hasName>
+  <era4ai:hasDescription>Risk of malicious SQL injection attacks on database</era4ai:hasDescription>
+  <era4ai:vulnerabilityScore>8.0</era4ai:vulnerabilityScore>
+  <era4ai:exploitabilityLevel>High</era4ai:exploitabilityLevel>
+  <era4ai:exposesAsset rdf:resource="http://example.org/oes#Asset_Database"/>
+</rdf:Description>
+
+<!-- Process Vulnerabilities -->
+<rdf:Description rdf:about="http://example.org/oes#Vuln_WeakAuthentication">
+  <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/era4ai#ProcessVulnerability"/>
+  <era4ai:hasName>Weak Authentication Process</era4ai:hasName>
+  <era4ai:hasDescription>Insufficient authentication mechanisms for system access</era4ai:hasDescription>
+  <era4ai:vulnerabilityScore>6.0</era4ai:vulnerabilityScore>
+  <era4ai:exploitabilityLevel>Medium</era4ai:exploitabilityLevel>
+</rdf:Description>
+
+<!-- Human Vulnerabilities -->
+<rdf:Description rdf:about="http://example.org/oes#Vuln_SocialEngineering">
+  <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/era4ai#HumanVulnerability"/>
+  <era4ai:hasName>Social Engineering Attacks</era4ai:hasName>
+  <era4ai:hasDescription>Risk of staff being manipulated to provide unauthorized access</era4ai:hasDescription>
+  <era4ai:vulnerabilityScore>5.5</era4ai:vulnerabilityScore>
+  <era4ai:exploitabilityLevel>Medium</era4ai:exploitabilityLevel>
+</rdf:Description>
+
+<!-- =================== RISK SOURCES =================== -->
+
+<!-- Data-Related Risk Sources -->
+<rdf:Description rdf:about="http://example.org/oes#RiskSrc_DataCorruption">
+  <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/era4ai#DataQualityIssue"/>
+  <era4ai:hasName>Data Corruption</era4ai:hasName>
+  <era4ai:hasDescription>Corruption of exam data, results, or candidate information</era4ai:hasDescription>
+  <era4ai:exploitedBy rdf:resource="http://example.org/oes#Vuln_DatabaseInjection"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://example.org/oes#RiskSrc_PrivacyViolation">
+  <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/era4ai#PrivacyLeakage"/>
+  <era4ai:hasName>Privacy Data Violation</era4ai:hasName>
+  <era4ai:hasDescription>Unauthorized access or disclosure of candidate personal data</era4ai:hasDescription>
+  <era4ai:exploitedBy rdf:resource="http://example.org/oes#Vuln_DataBreach"/>
+</rdf:Description>
+
+<!-- Model-Related Risk Sources -->
+<rdf:Description rdf:about="http://example.org/oes#RiskSrc_AIBias">
+  <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/era4ai#DataBias"/>
+  <era4ai:hasName>AI Model Bias</era4ai:hasName>
+  <era4ai:hasDescription>Biased performance of AI proctoring models against certain demographics</era4ai:hasDescription>
+  <era4ai:exploitedBy rdf:resource="http://example.org/oes#Vuln_FalsePositives"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://example.org/oes#RiskSrc_ModelFailure">
+  <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/era4ai#CalibrationError"/>
+  <era4ai:hasName>AI Model Performance Failure</era4ai:hasName>
+  <era4ai:hasDescription>Degradation in AI model accuracy affecting proctoring reliability</era4ai:hasDescription>
+  <era4ai:exploitedBy rdf:resource="http://example.org/oes#Vuln_FacialSpoofing"/>
+</rdf:Description>
+
+<!-- Human/Organizational Risk Sources -->
+<rdf:Description rdf:about="http://example.org/oes#RiskSrc_InsiderThreat">
+  <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/era4ai#Misuse"/>
+  <era4ai:hasName>Insider Threat</era4ai:hasName>
+  <era4ai:hasDescription>Malicious actions by authorized system users</era4ai:hasDescription>
+  <era4ai:exploitedBy rdf:resource="http://example.org/oes#Vuln_SocialEngineering"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://example.org/oes#RiskSrc_OperatorError">
+  <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/era4ai#Misinterpretation"/>
+  <era4ai:hasName>Human Operator Error</era4ai:hasName>
+  <era4ai:hasDescription>Mistakes in system operation or configuration</era4ai:hasDescription>
+</rdf:Description>
+
+<!-- Environmental/Contextual Risk Sources -->
+<rdf:Description rdf:about="http://example.org/oes#RiskSrc_CyberAttack">
+  <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/era4ai#AdversarialAttack"/>
+  <era4ai:hasName>Cybersecurity Attack</era4ai:hasName>
+  <era4ai:hasDescription>External attacks targeting system infrastructure</era4ai:hasDescription>
+  <era4ai:exploitedBy rdf:resource="http://example.org/oes#Vuln_SystemOverload"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://example.org/oes#RiskSrc_RegulatoryChange">
+  <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/era4ai#RegulatoryConstraint"/>
+  <era4ai:hasName>Data Protection Regulation Changes</era4ai:hasName>
+  <era4ai:hasDescription>Changes in GDPR or local data protection laws</era4ai:hasDescription>
+</rdf:Description>
+
+<!-- =================== RISKS =================== -->
+
+<rdf:Description rdf:about="http://example.org/oes#Risk_DataPrivacyBreach">
+  <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/era4ai#Risk"/>
+  <era4ai:hasName>Candidate Data Privacy Breach</era4ai:hasName>
+  <era4ai:hasDescription>Risk of unauthorized access to candidate personal information</era4ai:hasDescription>
+  <era4ai:hasRiskSource rdf:resource="http://example.org/oes#RiskSrc_PrivacyViolation"/>
+  <era4ai:threatens rdf:resource="http://example.org/oes#Asset_CandidateData"/>
+  <era4ai:hasRiskLevel rdf:resource="http://www.semanticweb.org/ontologies/era4ai#HighAIRisk"/>
+  <era4ai:hasRiskCategory rdf:resource="http://www.semanticweb.org/ontologies/era4ai#RegulatoryAIRisk"/>
+  <era4ai:riskScore>8.5</era4ai:riskScore>
+  <era4ai:probabilityOfOccurrence>0.3</era4ai:probabilityOfOccurrence>
+  <era4ai:hasSeverity>High</era4ai:hasSeverity>
+  <era4ai:hasLikelihood>Medium</era4ai:hasLikelihood>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://example.org/oes#Risk_ExamIntegrityViolation">
+  <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/era4ai#Risk"/>
+  <era4ai:hasName>Exam Integrity Violation</era4ai:hasName>
+  <era4ai:hasDescription>Risk of cheating or compromise of exam security</era4ai:hasDescription>
+  <era4ai:hasRiskSource rdf:resource="http://example.org/oes#RiskSrc_ModelFailure"/>
+  <era4ai:threatens rdf:resource="http://example.org/oes#Asset_QuestionBank"/>
+  <era4ai:hasRiskLevel rdf:resource="http://www.semanticweb.org/ontologies/era4ai#CriticalAIRisk"/>
+  <era4ai:hasRiskCategory rdf:resource="http://www.semanticweb.org/ontologies/era4ai#EthicalAIRisk"/>
+  <era4ai:riskScore>9.0</era4ai:riskScore>
+  <era4ai:probabilityOfOccurrence>0.25</era4ai:probabilityOfOccurrence>
+  <era4ai:hasSeverity>Critical</era4ai:hasSeverity>
+  <era4ai:hasLikelihood>Medium</era4ai:hasLikelihood>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://example.org/oes#Risk_AIBiasDiscrimination">
+  <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/era4ai#Risk"/>
+  <era4ai:hasName>AI Proctoring Bias and Discrimination</era4ai:hasName>
+  <era4ai:hasDescription>Risk of AI models showing bias against certain demographic groups</era4ai:hasDescription>
+  <era4ai:hasRiskSource rdf:resource="http://example.org/oes#RiskSrc_AIBias"/>
+  <era4ai:threatens rdf:resource="http://example.org/oes#Asset_ExamCandidates"/>
+  <era4ai:hasRiskLevel rdf:resource="http://www.semanticweb.org/ontologies/era4ai#HighAIRisk"/>
+  <era4ai:hasRiskCategory rdf:resource="http://www.semanticweb.org/ontologies/era4ai#EthicalAIRisk"/>
+  <era4ai:riskScore>7.5</era4ai:riskScore>
+  <era4ai:probabilityOfOccurrence>0.4</era4ai:probabilityOfOccurrence>
+  <era4ai:hasSeverity>High</era4ai:hasSeverity>
+  <era4ai:hasLikelihood>Medium</era4ai:hasLikelihood>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://example.org/oes#Risk_SystemPerformanceFailure">
+  <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/era4ai#Risk"/>
+  <era4ai:hasName>System Performance Failure During Peak Load</era4ai:hasName>
+  <era4ai:hasDescription>Risk of system failure when handling 100,000 concurrent users</era4ai:hasDescription>
+  <era4ai:hasRiskSource rdf:resource="http://example.org/oes#RiskSrc_CyberAttack"/>
+  <era4ai:threatens rdf:resource="http://example.org/oes#Asset_ExamPlatform"/>
+  <era4ai:hasRiskLevel rdf:resource="http://www.semanticweb.org/ontologies/era4ai#HighAIRisk"/>
+  <era4ai:hasRiskCategory rdf:resource="http://www.semanticweb.org/ontologies/era4ai#OperationalAIRisk"/>
+  <era4ai:riskScore>7.0</era4ai:riskScore>
+  <era4ai:probabilityOfOccurrence>0.35</era4ai:probabilityOfOccurrence>
+  <era4ai:hasSeverity>High</era4ai:hasSeverity>
+  <era4ai:hasLikelihood>Medium</era4ai:hasLikelihood>
+</rdf:Description>
+
+<!-- =================== CONSEQUENCES =================== -->
+
+<rdf:Description rdf:about="http://example.org/oes#Cons_LegalCompliance">
+  <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/era4ai#Consequence"/>
+  <era4ai:hasName>GDPR Non-Compliance</era4ai:hasName>
+  <era4ai:hasDescription>Legal consequences due to privacy regulation violations</era4ai:hasDescription>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://example.org/oes#Cons_ExamCancellation">
+  <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/era4ai#Consequence"/>
+  <era4ai:hasName>Examination Cancellation</era4ai:hasName>
+  <era4ai:hasDescription>Forced cancellation of examinations due to security breaches</era4ai:hasDescription>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://example.org/oes#Cons_CandidateDiscrimination">
+  <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/era4ai#Consequence"/>
+  <era4ai:hasName>Candidate Discrimination</era4ai:hasName>
+  <era4ai:hasDescription>Unfair treatment of candidates due to biased AI systems</era4ai:hasDescription>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://example.org/oes#Cons_ServiceDisruption">
+  <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/era4ai#Consequence"/>
+  <era4ai:hasName>Service Disruption</era4ai:hasName>
+  <era4ai:hasDescription>System downtime affecting exam delivery</era4ai:hasDescription>
+</rdf:Description>
+
+<!-- =================== IMPACTS =================== -->
+
+<rdf:Description rdf:about="http://example.org/oes#Impact_Legal">
+  <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/era4ai#LegalComplianceImpact"/>
+  <era4ai:hasName>Legal and Regulatory Impact</era4ai:hasName>
+  <era4ai:hasDescription>Fines and legal actions due to privacy violations</era4ai:hasDescription>
+  <era4ai:impactSeverity>High</era4ai:impactSeverity>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://example.org/oes#Impact_Financial">
+  <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/era4ai#FinancialImpact"/>
+  <era4ai:hasName>Financial Loss</era4ai:hasName>
+  <era4ai:hasDescription>Financial losses due to system failures and legal penalties</era4ai:hasDescription>
+  <era4ai:impactSeverity>High</era4ai:impactSeverity>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://example.org/oes#Impact_Reputational">
+  <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/era4ai#ReputationalImpact"/>
+  <era4ai:hasName>Organizational Reputation Damage</era4ai:hasName>
+  <era4ai:hasDescription>Loss of public trust in government examination system</era4ai:hasDescription>
+  <era4ai:impactSeverity>High</era4ai:impactSeverity>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://example.org/oes#Impact_Fairness">
+  <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/era4ai#FairnessEthicsImpact"/>
+  <era4ai:hasName>Fairness and Ethics Impact</era4ai:hasName>
+  <era4ai:hasDescription>Unfair treatment and ethical violations affecting candidates</era4ai:hasDescription>
+  <era4ai:impactSeverity>High</era4ai:impactSeverity>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://example.org/oes#Impact_Operational">
+  <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/era4ai#OperationalImpact"/>
+  <era4ai:hasName>Operational Disruption</era4ai:hasName>
+  <era4ai:hasDescription>Disruption to examination processes and operations</era4ai:hasDescription>
+  <era4ai:impactSeverity>Medium</era4ai:impactSeverity>
+</rdf:Description>
+
+<!-- =================== RISK CONSEQUENCE RELATIONSHIPS =================== -->
+
+<rdf:Description rdf:about="http://example.org/oes#Risk_DataPrivacyBreach">
+  <era4ai:hasConsequence rdf:resource="http://example.org/oes#Cons_LegalCompliance"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://example.org/oes#Risk_ExamIntegrityViolation">
+  <era4ai:hasConsequence rdf:resource="http://example.org/oes#Cons_ExamCancellation"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://example.org/oes#Risk_AIBiasDiscrimination">
+  <era4ai:hasConsequence rdf:resource="http://example.org/oes#Cons_CandidateDiscrimination"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://example.org/oes#Risk_SystemPerformanceFailure">
+  <era4ai:hasConsequence rdf:resource="http://example.org/oes#Cons_ServiceDisruption"/>
+</rdf:Description>
+
+<!-- =================== CONSEQUENCE IMPACT RELATIONSHIPS =================== -->
+
+<rdf:Description rdf:about="http://example.org/oes#Cons_LegalCompliance">
+  <era4ai:hasImpact rdf:resource="http://example.org/oes#Impact_Legal"/>
+  <era4ai:hasImpact rdf:resource="http://example.org/oes#Impact_Financial"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://example.org/oes#Cons_ExamCancellation">
+  <era4ai:hasImpact rdf:resource="http://example.org/oes#Impact_Reputational"/>
+  <era4ai:hasImpact rdf:resource="http://example.org/oes#Impact_Operational"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://example.org/oes#Cons_CandidateDiscrimination">
+  <era4ai:hasImpact rdf:resource="http://example.org/oes#Impact_Fairness"/>
+  <era4ai:hasImpact rdf:resource="http://example.org/oes#Impact_Reputational"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://example.org/oes#Cons_ServiceDisruption">
+  <era4ai:hasImpact rdf:resource="http://example.org/oes#Impact_Operational"/>
+  <era4ai:hasImpact rdf:resource="http://example.org/oes#Impact_Financial"/>
+</rdf:Description>
+
+<!-- =================== RISK CONTROLS =================== -->
+
+<!-- Preventive Controls -->
+<rdf:Description rdf:about="http://example.org/oes#Control_DataEncryption">
+  <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/era4ai#PreventiveControl"/>
+  <era4ai:hasName>Data Encryption Control</era4ai:hasName>
+  <era4ai:hasDescription>AES-256 encryption for data at rest and TLS for data in transit</era4ai:hasDescription>
+  <era4ai:controls rdf:resource="http://example.org/oes#Risk_DataPrivacyBreach"/>
+  <era4ai:protects rdf:resource="http://example.org/oes#Asset_CandidateData"/>
+  <era4ai:controlEffectiveness>0.9</era4ai:controlEffectiveness>
+  <era4ai:controlType>Preventive</era4ai:controlType>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://example.org/oes#Control_AccessControl">
+  <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/era4ai#PreventiveControl"/>
+  <era4ai:hasName>Role-Based Access Control</era4ai:hasName>
+  <era4ai:hasDescription>Multi-factor authentication and role-based access permissions</era4ai:hasDescription>
+  <era4ai:controls rdf:resource="http://example.org/oes#Risk_DataPrivacyBreach"/>
+  <era4ai:mitigates rdf:resource="http://example.org/oes#Vuln_WeakAuthentication"/>
+  <era4ai:controlEffectiveness>0.85</era4ai:controlEffectiveness>
+  <era4ai:controlType>Preventive</era4ai:controlType>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://example.org/oes#Control_InputValidation">
+  <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/era4ai#PreventiveControl"/>
+  <era4ai:hasName>Input Validation and Sanitization</era4ai:hasName>
+  <era4ai:hasDescription>Prevent SQL injection and XSS attacks through input validation</era4ai:hasDescription>
+  <era4ai:mitigates rdf:resource="http://example.org/oes#Vuln_DatabaseInjection"/>
+  <era4ai:protects rdf:resource="http://example.org/oes#Asset_Database"/>
+  <era4ai:controlEffectiveness>0.8</era4ai:controlEffectiveness>
+  <era4ai:controlType>Preventive</era4ai:controlType>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://example.org/oes#Control_ModelValidation">
+  <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/era4ai#PreventiveControl"/>
+  <era4ai:hasName>AI Model Validation and Testing</era4ai:hasName>
+  <era4ai:hasDescription>Regular validation and bias testing of AI proctoring models</era4ai:hasDescription>
+  <era4ai:controls rdf:resource="http://example.org/oes#Risk_AIBiasDiscrimination"/>
+  <era4ai:mitigates rdf:resource="http://example.org/oes#Vuln_FalsePositives"/>
+  <era4ai:protects rdf:resource="http://example.org/oes#Asset_CheatingDetModel"/>
+  <era4ai:controlEffectiveness>0.75</era4ai:controlEffectiveness>
+  <era4ai:controlType>Preventive</era4ai:controlType>
+</rdf:Description>
+
+<!-- Detective Controls -->
+<rdf:Description rdf:about="http://example.org/oes#Control_IntrusionDetection">
+  <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/era4ai#DetectiveControl"/>
+  <era4ai:hasName>Intrusion Detection System</era4ai:hasName>
+  <era4ai:hasDescription>Real-time monitoring for unauthorized access attempts</era4ai:hasDescription>
+  <era4ai:controls rdf:resource="http://example.org/oes#Risk_DataPrivacyBreach"/>
+  <era4ai:protects rdf:resource="http://example.org/oes#Asset_ExamPlatform"/>
+  <era4ai:controlEffectiveness>0.8</era4ai:controlEffectiveness>
+  <era4ai:controlType>Detective</era4ai:controlType>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://example.org/oes#Control_PerformanceMonitoring">
+  <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/era4ai#DetectiveControl"/>
+  <era4ai:hasName>System Performance Monitoring</era4ai:hasName>
+  <era4ai:hasDescription>Continuous monitoring of system performance and resource usage</era4ai:hasDescription>
+  <era4ai:controls rdf:resource="http://example.org/oes#Risk_SystemPerformanceFailure"/>
+  <era4ai:protects rdf:resource="http://example.org/oes#Asset_ExamPlatform"/>
+  <era4ai:controlEffectiveness>0.85</era4ai:controlEffectiveness>
+  <era4ai:controlType>Detective</era4ai:controlType>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://example.org/oes#Control_AuditLogging">
+  <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/era4ai#DetectiveControl"/>
+  <era4ai:hasName>Comprehensive Audit Logging</era4ai:hasName>
+  <era4ai:hasDescription>Immutable audit logs for all system transactions and user actions</era4ai:hasDescription>
+  <era4ai:controls rdf:resource="http://example.org/oes#Risk_ExamIntegrityViolation"/>
+  <era4ai:controlEffectiveness>0.9</era4ai:controlEffectiveness>
+  <era4ai:controlType>Detective</era4ai:controlType>
+</rdf:Description>
+
+<!-- Corrective Controls -->
+<rdf:Description rdf:about="http://example.org/oes#Control_IncidentResponse">
+  <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/era4ai#CorrectiveControl"/>
+  <era4ai:hasName>Incident Response Plan</era4ai:hasName>
+  <era4ai:hasDescription>Structured response procedures for security incidents</era4ai:hasDescription>
+  <era4ai:controlEffectiveness>0.7</era4ai:controlEffectiveness>
+  <era4ai:controlType>Corrective</era4ai:controlType>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://example.org/oes#Control_DataBackup">
+  <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/era4ai#CorrectiveControl"/>
+  <era4ai:hasName>Data Backup and Recovery</era4ai:hasName>
+  <era4ai:hasDescription>Daily/weekly backups with mirrored copies for data recovery</era4ai:hasDescription>
+  <era4ai:protects rdf:resource="http://example.org/oes#Asset_CandidateData"/>
+  <era4ai:protects rdf:resource="http://example.org/oes#Asset_QuestionBank"/>
+  <era4ai:controlEffectiveness>0.95</era4ai:controlEffectiveness>
+  <era4ai:controlType>Corrective</era4ai:controlType>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://example.org/oes#Control_ModelRetraining">
+  <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/era4ai#CorrectiveControl"/>
+  <era4ai:hasName>AI Model Retraining and Calibration</era4ai:hasName>
+  <era4ai:hasDescription>Periodic retraining of AI models to address bias and performance issues</era4ai:hasDescription>
+  <era4ai:controls rdf:resource="http://example.org/oes#Risk_AIBiasDiscrimination"/>
+  <era4ai:mitigates rdf:resource="http://example.org/oes#Vuln_FalsePositives"/>
+  <era4ai:controlEffectiveness>0.8</era4ai:controlEffectiveness>
+  <era4ai:controlType>Corrective</era4ai:controlType>
+</rdf:Description>
+
+<!-- =================== MITIGATION GOALS =================== -->
+
+<rdf:Description rdf:about="http://example.org/oes#MitGoal_DataProtection">
+  <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/era4ai#MitigationGoal"/>
+  <era4ai:hasName>Ensure Data Protection Compliance</era4ai:hasName>
+  <era4ai:hasDescription>Maintain GDPR compliance and protect candidate privacy</era4ai:hasDescription>
+  <era4ai:refinesGoal rdf:resource="http://example.org/oes#G_DataPrivacy"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://example.org/oes#MitGoal_ExamSecurity">
+  <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/era4ai#MitigationGoal"/>
+  <era4ai:hasName>Maintain Exam Security and Integrity</era4ai:hasName>
+  <era4ai:hasDescription>Prevent cheating and ensure fair examination processes</era4ai:hasDescription>
+  <era4ai:refinesGoal rdf:resource="http://example.org/oes#G_SecureExamination"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://example.org/oes#MitGoal_AIFairness">
+  <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/era4ai#MitigationGoal"/>
+  <era4ai:hasName>Ensure AI Fairness and Non-Discrimination</era4ai:hasName>
+  <era4ai:hasDescription>Prevent biased AI behavior and ensure fair treatment of all candidates</era4ai:hasDescription>
+  <era4ai:refinesGoal rdf:resource="http://example.org/oes#G_AIProctoring"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://example.org/oes#MitGoal_SystemReliability">
+  <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/era4ai#MitigationGoal"/>
+  <era4ai:hasName>Ensure System Reliability and Performance</era4ai:hasName>
+  <era4ai:hasDescription>Maintain system performance under peak loads and ensure availability</era4ai:hasDescription>
+  <era4ai:refinesGoal rdf:resource="http://example.org/oes#G_Scalability"/>
+</rdf:Description>
+
+<!-- =================== RISK CONTROL TO MITIGATION GOAL RELATIONSHIPS =================== -->
+
+<rdf:Description rdf:about="http://example.org/oes#Control_DataEncryption">
+  <era4ai:implementedBy rdf:resource="http://example.org/oes#MitGoal_DataProtection"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://example.org/oes#Control_AccessControl">
+  <era4ai:implementedBy rdf:resource="http://example.org/oes#MitGoal_DataProtection"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://example.org/oes#Control_AuditLogging">
+  <era4ai:implementedBy rdf:resource="http://example.org/oes#MitGoal_ExamSecurity"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://example.org/oes#Control_ModelValidation">
+  <era4ai:implementedBy rdf:resource="http://example.org/oes#MitGoal_AIFairness"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://example.org/oes#Control_ModelRetraining">
+  <era4ai:implementedBy rdf:resource="http://example.org/oes#MitGoal_AIFairness"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://example.org/oes#Control_PerformanceMonitoring">
+  <era4ai:implementedBy rdf:resource="http://example.org/oes#MitGoal_SystemReliability"/>
+</rdf:Description>
+
+<!-- =================== TASKS AND AGENTS =================== -->
+
+<rdf:Description rdf:about="http://example.org/oes#Task_FacialAuthentication">
+  <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/era4ai#Task"/>
+  <era4ai:hasName>Facial Authentication</era4ai:hasName>
+  <era4ai:hasDescription>Authenticate candidate identity using facial recognition</era4ai:hasDescription>
+  <era4ai:assignedTo rdf:resource="http://example.org/oes#Agent_FacialRecognition"/>
+  <era4ai:achieves rdf:resource="http://example.org/oes#G_AIProctoring"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://example.org/oes#Task_CheatingMonitoring">
+  <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/era4ai#Task"/>
+  <era4ai:hasName>Cheating Behavior Monitoring</era4ai:hasName>
+  <era4ai:hasDescription>Monitor and detect suspicious behaviors during exams</era4ai:hasDescription>
+  <era4ai:assignedTo rdf:resource="http://example.org/oes#Agent_CheatingDetection"/>
+  <era4ai:achieves rdf:resource="http://example.org/oes#G_SecureExamination"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://example.org/oes#Task_AutomaticGrading">
+  <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/era4ai#Task"/>
+  <era4ai:hasName>Automatic Grading</era4ai:hasName>
+  <era4ai:hasDescription>Automatically grade objective questions and generate scores</era4ai:hasDescription>
+  <era4ai:assignedTo rdf:resource="http://example.org/oes#Agent_AutoGrading"/>
+  <era4ai:achieves rdf:resource="http://example.org/oes#G_ModernizeExamination"/>
+</rdf:Description>
+
+<!-- =================== AI RISK SCENARIOS =================== -->
+
+<rdf:Description rdf:about="http://example.org/oes#Scenario_BiasedProctoring">
+  <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/era4ai#AIRiskScenario"/>
+  <era4ai:hasName>Biased AI Proctoring Scenario</era4ai:hasName>
+  <era4ai:hasDescription>AI proctoring system shows higher false positive rates for candidates from certain ethnic backgrounds</era4ai:hasDescription>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://example.org/oes#Scenario_DataBreachScenario">
+  <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/era4ai#AIRiskScenario"/>
+  <era4ai:hasName>Personal Data Breach Scenario</era4ai:hasName>
+  <era4ai:hasDescription>Unauthorized access to candidate personal data leading to privacy violations and GDPR non-compliance</era4ai:hasDescription>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://example.org/oes#Scenario_SystemOverload">
+  <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/era4ai#AIRiskScenario"/>
+  <era4ai:hasName>Peak Load System Failure Scenario</era4ai:hasName>
+  <era4ai:hasDescription>System crashes during peak examination period with 100,000 concurrent users, disrupting ongoing exams</era4ai:hasDescription>
+</rdf:Description>
+
+<!-- =================== RISK TO SCENARIO RELATIONSHIPS =================== -->
+
+<rdf:Description rdf:about="http://example.org/oes#Risk_AIBiasDiscrimination">
+  <era4ai:realizesScenario rdf:resource="http://example.org/oes#Scenario_BiasedProctoring"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://example.org/oes#Risk_DataPrivacyBreach">
+  <era4ai:realizesScenario rdf:resource="http://example.org/oes#Scenario_DataBreachScenario"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://example.org/oes#Risk_SystemPerformanceFailure">
+  <era4ai:realizesScenario rdf:resource="http://example.org/oes#Scenario_SystemOverload"/>
+</rdf:Description>
+
+<!-- =================== LIFECYCLE STAGES =================== -->
+
+<rdf:Description rdf:about="http://example.org/oes#Risk_DataPrivacyBreach">
+  <era4ai:occursIn rdf:resource="http://www.semanticweb.org/ontologies/era4ai#DataCollectionStage"/>
+  <era4ai:occursIn rdf:resource="http://www.semanticweb.org/ontologies/era4ai#OperationMonitoringStage"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://example.org/oes#Risk_AIBiasDiscrimination">
+  <era4ai:occursIn rdf:resource="http://www.semanticweb.org/ontologies/era4ai#ModelTrainingStage"/>
+  <era4ai:occursIn rdf:resource="http://www.semanticweb.org/ontologies/era4ai#OperationMonitoringStage"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://example.org/oes#Risk_ExamIntegrityViolation">
+  <era4ai:occursIn rdf:resource="http://www.semanticweb.org/ontologies/era4ai#OperationMonitoringStage"/>
+  <era4ai:occursIn rdf:resource="http://www.semanticweb.org/ontologies/era4ai#HumanDecisionStage"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://example.org/oes#Risk_SystemPerformanceFailure">
+  <era4ai:occursIn rdf:resource="http://www.semanticweb.org/ontologies/era4ai#DeploymentStage"/>
+  <era4ai:occursIn rdf:resource="http://www.semanticweb.org/ontologies/era4ai#OperationMonitoringStage"/>
+</rdf:Description>
+
+<!-- =================== CONTEXT INFORMATION =================== -->
+
+<rdf:Description rdf:about="http://example.org/oes#Context_GovernmentExam">
+  <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/era4ai#Context"/>
+  <era4ai:hasName>Government Standardized Examination Context</era4ai:hasName>
+  <era4ai:hasDescription>Context of large-scale government examinations with high security requirements</era4ai:hasDescription>
+  <era4ai:hasDomain rdf:resource="http://www.semanticweb.org/ontologies/era4ai#PublicSector"/>
+  <era4ai:involvesStakeholder rdf:resource="http://example.org/oes#Actor_Admin"/>
+  <era4ai:involvesStakeholder rdf:resource="http://example.org/oes#Actor_Candidate"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://example.org/oes#Risk_DataPrivacyBreach">
+  <era4ai:appliesInContext rdf:resource="http://example.org/oes#Context_GovernmentExam"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://example.org/oes#Risk_AIBiasDiscrimination">
+  <era4ai:appliesInContext rdf:resource="http://example.org/oes#Context_GovernmentExam"/>
+</rdf:Description>
+
+<!-- =============================================================== -->
+<!--          MISSING RELATIONSHIPS FOR GORE QUERIES              -->
+<!-- =============================================================== -->
+
+<!-- =================== TASK-ASSET RELATIONSHIPS =================== -->
+<!-- These relationships are essential for connecting Goals->Tasks->Assets->Risks -->
+
+<!-- Tasks require specific assets to achieve goals -->
+<rdf:Description rdf:about="http://example.org/oes#Task_FacialAuthentication">
+  <era4ai:requires rdf:resource="http://example.org/oes#Asset_CandidateData"/>
+  <era4ai:requires rdf:resource="http://example.org/oes#Asset_FacialRecModel"/>
+  <era4ai:requires rdf:resource="http://example.org/oes#Asset_ProctoringData"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://example.org/oes#Task_CheatingMonitoring">
+  <era4ai:requires rdf:resource="http://example.org/oes#Asset_CheatingDetModel"/>
+  <era4ai:requires rdf:resource="http://example.org/oes#Asset_ExamCandidates"/>
+  <era4ai:requires rdf:resource="http://example.org/oes#Asset_ProctoringData"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://example.org/oes#Task_AutomaticGrading">
+  <era4ai:requires rdf:resource="http://example.org/oes#Asset_ExamResults"/>
+  <era4ai:requires rdf:resource="http://example.org/oes#Asset_QuestionBank"/>
+</rdf:Description>
+
+<!-- Additional tasks that achieve different goals and require assets -->
+<rdf:Description rdf:about="http://example.org/oes#Task_DataProtection">
+  <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/era4ai#Task"/>
+  <era4ai:hasName>Protect Candidate Personal Data</era4ai:hasName>
+  <era4ai:achieves rdf:resource="http://example.org/oes#G_DataPrivacy"/>
+  <era4ai:requires rdf:resource="http://example.org/oes#Asset_CandidateData"/>
+  <era4ai:requires rdf:resource="http://example.org/oes#Asset_Database"/>
+  <era4ai:assignedTo rdf:resource="http://example.org/oes#Actor_Admin"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://example.org/oes#Task_SystemScaling">
+  <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/era4ai#Task"/>
+  <era4ai:hasName>Scale System for High Load</era4ai:hasName>
+  <era4ai:achieves rdf:resource="http://example.org/oes#G_Scalability"/>
+  <era4ai:requires rdf:resource="http://example.org/oes#Asset_ExamPlatform"/>
+  <era4ai:requires rdf:resource="http://example.org/oes#Asset_Database"/>
+  <era4ai:assignedTo rdf:resource="http://example.org/oes#Actor_Admin"/>
+</rdf:Description>
+
+<!-- =================== MITIGATION GOAL REFINEMENTS =================== -->
+<!-- These establish how mitigation goals refine original goals -->
+
+<rdf:Description rdf:about="http://example.org/oes#MitGoal_DataProtection">
+  <era4ai:refinesGoal rdf:resource="http://example.org/oes#G_DataPrivacy"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://example.org/oes#MitGoal_ExamSecurity">
+  <era4ai:refinesGoal rdf:resource="http://example.org/oes#G_SecureExamination"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://example.org/oes#MitGoal_AIFairness">
+  <era4ai:refinesGoal rdf:resource="http://example.org/oes#G_AIProctoring"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://example.org/oes#MitGoal_SystemReliability">
+  <era4ai:refinesGoal rdf:resource="http://example.org/oes#G_Scalability"/>
+</rdf:Description>
+
+<!-- =================== ADDITIONAL RISK MITIGATIONS =================== -->
+<!-- Connect risks to mitigation goals for complete GORE cycle -->
+
+<rdf:Description rdf:about="http://example.org/oes#Risk_DataPrivacyBreach">
+  <era4ai:mitigatedBy rdf:resource="http://example.org/oes#MitGoal_DataProtection"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://example.org/oes#Risk_ExamIntegrityViolation">
+  <era4ai:mitigatedBy rdf:resource="http://example.org/oes#MitGoal_ExamSecurity"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://example.org/oes#Risk_AIBiasDiscrimination">
+  <era4ai:mitigatedBy rdf:resource="http://example.org/oes#MitGoal_AIFairness"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://example.org/oes#Risk_SystemPerformanceFailure">
+  <era4ai:mitigatedBy rdf:resource="http://example.org/oes#MitGoal_SystemReliability"/>
+</rdf:Description>
+
+</rdf:RDF>

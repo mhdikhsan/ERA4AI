@@ -1,0 +1,372 @@
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix gvre: <https://w3id.org/gvre#> .
+
+#################################################################
+# Ontology header
+#################################################################
+
+gvre: a owl:Ontology ;
+  rdfs:label "GVRE Ontology for Goal-Value Requirements Engineering" ;
+  rdfs:comment "GVRE ontology plus ONLIM chatbot risk-assessment use case instances." .
+
+#################################################################
+# Classes
+#################################################################
+
+gvre:Goal a owl:Class ;
+  rdfs:label "Goal" ;
+  rdfs:comment "High-level objective describing what the system or stakeholder intends to achieve." .
+
+gvre:SoftGoal a owl:Class ;
+  rdfs:label "SoftGoal" ;
+  rdfs:comment "Qualitative objective expressing desired qualities or values that cannot be measured with precise criteria." .
+
+gvre:Requirement a owl:Class ;
+  rdfs:label "Requirement" ;
+  rdfs:comment "Abstract superclass for functional and non-functional requirements." .
+
+gvre:FunctionalRequirement a owl:Class ;
+  rdfs:subClassOf gvre:Requirement ;
+  rdfs:label "FunctionalRequirement" ;
+  rdfs:comment "Requirement specifying concrete behaviors, actions, or functionalities the system must perform." .
+
+gvre:NonFunctionalRequirement a owl:Class ;
+  rdfs:subClassOf gvre:Requirement ;
+  rdfs:label "NonFunctionalRequirement" ;
+  rdfs:comment "Requirement specifying constraints, quality attributes, or performance conditions under which the system must operate." .
+
+gvre:ValueRegister a owl:Class ;
+  rdfs:label "ValueRegister" ;
+  rdfs:comment "Catalog of ethical values, principles, and value clusters that the system must respect." .
+
+gvre:EthicalValueRequirement a owl:Class ;
+  rdfs:label "EthicalValueRequirement" ;
+  rdfs:comment "Ethical obligations derived from the Value Register; still high-level and not yet directly implementable." .
+
+gvre:ValueBasedSystemRequirement a owl:Class ;
+  rdfs:label "ValueBasedSystemRequirement" ;
+  rdfs:comment "System-level obligations that operationalize EVRs and can refine FRs or NFRs." .
+
+#################################################################
+# Object properties
+#################################################################
+
+gvre:hasSoftGoal a owl:ObjectProperty ;
+  rdfs:domain gvre:Goal ;
+  rdfs:range  gvre:SoftGoal ;
+  rdfs:label "hasSoftGoal" ;
+  rdfs:comment "Links a Goal to its associated SoftGoals." .
+
+gvre:createsRequirement a owl:ObjectProperty ;
+  rdfs:domain gvre:Goal ;
+  rdfs:range  gvre:Requirement ;
+  rdfs:label "createsRequirement" ;
+  rdfs:comment "Goal creates (induces) a requirement (FR or NFR)." .
+
+gvre:satisfiesGoal a owl:ObjectProperty ;
+  rdfs:domain gvre:Requirement ;
+  rdfs:range  gvre:Goal ;
+  rdfs:label "satisfiesGoal" ;
+  rdfs:comment "Requirement (FR or NFR) that satisfies a Goal." .
+
+gvre:influencesRequirement a owl:ObjectProperty ;
+  rdfs:domain gvre:SoftGoal ;
+  rdfs:range  gvre:Requirement ;
+  rdfs:label "influencesRequirement" ;
+  rdfs:comment "SoftGoal that influences how a requirement should be interpreted or constrained." .
+
+gvre:addressedByNFR a owl:ObjectProperty ;
+  rdfs:domain gvre:Requirement ;
+  rdfs:range  gvre:NonFunctionalRequirement ;
+  rdfs:label "addressedByNFR" ;
+  rdfs:comment "Requirement whose quality aspects are addressed by an NFR." .
+
+gvre:refinedByVBSR a owl:ObjectProperty ;
+  rdfs:domain gvre:Requirement ;
+  rdfs:range  gvre:ValueBasedSystemRequirement ;
+  rdfs:label "refinedByVBSR" ;
+  rdfs:comment "Requirement that is refined by a Value-Based System Requirement." .
+
+gvre:addsContextToValueRegister a owl:ObjectProperty ;
+  rdfs:domain gvre:SoftGoal ;
+  rdfs:range  gvre:ValueRegister ;
+  rdfs:label "addsContextToValueRegister" ;
+  rdfs:comment "SoftGoal that provides contextual grounding for a ValueRegister in a specific project." .
+
+gvre:definesEVR a owl:ObjectProperty ;
+  rdfs:domain gvre:ValueRegister ;
+  rdfs:range  gvre:EthicalValueRequirement ;
+  rdfs:label "definesEVR" ;
+  rdfs:comment "ValueRegister that defines an Ethical Value Requirement." .
+
+gvre:generatesVBSR a owl:ObjectProperty ;
+  rdfs:domain gvre:EthicalValueRequirement ;
+  rdfs:range  gvre:ValueBasedSystemRequirement ;
+  rdfs:label "generatesVBSR" ;
+  rdfs:comment "Ethical Value Requirement that generates a Value-Based System Requirement." .
+
+#################################################################
+# Datatype properties (simple labels/descriptions)
+#################################################################
+
+gvre:hasId a owl:DatatypeProperty ;
+  rdfs:domain gvre:Requirement ;
+  rdfs:range  xsd:string ;
+  rdfs:label "hasId" .
+
+gvre:hasText a owl:DatatypeProperty ;
+  rdfs:domain gvre:Requirement ;
+  rdfs:range  xsd:string ;
+  rdfs:label "hasText" .
+
+gvre:hasDescription a owl:DatatypeProperty ;
+  rdfs:domain owl:Thing ;
+  rdfs:range  xsd:string ;
+  rdfs:label "hasDescription" .
+
+#################################################################
+# Individuals: ONLIM use case
+#################################################################
+
+########################
+# Goals
+########################
+
+gvre:G1 a gvre:Goal ;
+  rdfs:label "G1" ;
+  gvre:hasDescription "Enable safe and trustworthy chatbot interactions." .
+
+gvre:G2 a gvre:Goal ;
+  rdfs:label "G2" ;
+  gvre:hasDescription "Support risk assessment for all chatbot components at design-time and run-time." .
+
+gvre:G3 a gvre:Goal ;
+  rdfs:label "G3" ;
+  gvre:hasDescription "Continuously monitor chatbot behavior for unsafe or anomalous activity." .
+
+gvre:G4 a gvre:Goal ;
+  rdfs:label "G4" ;
+  gvre:hasDescription "Ensure compliance with GDPR and the EU AI Act." .
+
+########################
+# SoftGoals
+########################
+
+gvre:SG1 a gvre:SoftGoal ;
+  rdfs:label "SG1 Trustworthiness" ;
+  gvre:hasDescription "Users must trust chatbot outputs and risk assessments." .
+
+gvre:SG2 a gvre:SoftGoal ;
+  rdfs:label "SG2 Transparency" ;
+  gvre:hasDescription "Users and auditors must understand AI and monitoring behaviour." .
+
+gvre:SG3 a gvre:SoftGoal ;
+  rdfs:label "SG3 Accountability" ;
+  gvre:hasDescription "Risk findings and decisions must be traceable to components and actors." .
+
+gvre:SG4 a gvre:SoftGoal ;
+  rdfs:label "SG4 PrivacyProtection" ;
+  gvre:hasDescription "Conversation logs contain personal data; GDPR requires minimization and protection." .
+
+gvre:SG5 a gvre:SoftGoal ;
+  rdfs:label "SG5 SafetyAndHarmAvoidance" ;
+  gvre:hasDescription "The system must minimise harmful or misleading content." .
+
+########################
+# Goal–SoftGoal links
+########################
+
+gvre:G1 gvre:hasSoftGoal gvre:SG1 , gvre:SG4 , gvre:SG5 .
+gvre:G2 gvre:hasSoftGoal gvre:SG1 , gvre:SG3 .
+gvre:G3 gvre:hasSoftGoal gvre:SG2 , gvre:SG5 .
+gvre:G4 gvre:hasSoftGoal gvre:SG3 , gvre:SG4 .
+
+########################
+# Functional Requirements (non-value)
+########################
+
+gvre:FR1 a gvre:FunctionalRequirement ;
+  gvre:hasId "FR1" ;
+  gvre:hasText "The system shall identify all chatbot components and generate a structured risk map." ;
+  gvre:satisfiesGoal gvre:G1 , gvre:G2 .
+
+gvre:FR2 a gvre:FunctionalRequirement ;
+  gvre:hasId "FR2" ;
+  gvre:hasText "The system shall perform risk assessment at both design-time and run-time." ;
+  gvre:satisfiesGoal gvre:G2 .
+
+gvre:FR3 a gvre:FunctionalRequirement ;
+  gvre:hasId "FR3" ;
+  gvre:hasText "The system shall capture and analyze conversation logs for hallucinations, misinformation, and harmful content." ;
+  gvre:satisfiesGoal gvre:G1 , gvre:G3 .
+
+gvre:FR4 a gvre:FunctionalRequirement ;
+  gvre:hasId "FR4" ;
+  gvre:hasText "The system shall detect anomalous or harmful chatbot outputs and policy violations." ;
+  gvre:satisfiesGoal gvre:G1 , gvre:G3 .
+
+gvre:FR5 a gvre:FunctionalRequirement ;
+  gvre:hasId "FR5" ;
+  gvre:hasText "The system shall process all personal data in compliance with GDPR principles." ;
+  gvre:satisfiesGoal gvre:G4 .
+
+gvre:FR6 a gvre:FunctionalRequirement ;
+  gvre:hasId "FR6" ;
+  gvre:hasText "The system shall generate risk assessment reports summarizing risks, impacts, and mitigation actions." ;
+  gvre:satisfiesGoal gvre:G2 , gvre:G4 .
+
+gvre:FR7 a gvre:FunctionalRequirement ;
+  gvre:hasId "FR7" ;
+  gvre:hasText "The system shall validate external data sources (KGs, APIs) for correctness, reliability, and possible bias." ;
+  gvre:satisfiesGoal gvre:G1 , gvre:G2 .
+
+########################
+# Non-Functional Requirements (non-value)
+########################
+
+gvre:NFR1 a gvre:NonFunctionalRequirement ;
+  gvre:hasId "NFR1" ;
+  gvre:hasText "The system shall provide consistent and reliable risk detection results across all monitored interactions." .
+
+gvre:NFR2 a gvre:NonFunctionalRequirement ;
+  gvre:hasId "NFR2" ;
+  gvre:hasText "The system shall process monitoring tasks in real-time without degrading chatbot responsiveness." .
+
+gvre:NFR3 a gvre:NonFunctionalRequirement ;
+  gvre:hasId "NFR3" ;
+  gvre:hasText "The system shall remain operational when external KGs or APIs partially fail, using fallback modes." .
+
+gvre:NFR4 a gvre:NonFunctionalRequirement ;
+  gvre:hasId "NFR4" ;
+  gvre:hasText "The system shall protect logs, personal data, and risk artifacts with encryption and access control." .
+
+gvre:NFR5 a gvre:NonFunctionalRequirement ;
+  gvre:hasId "NFR5" ;
+  gvre:hasText "The system shall provide human-understandable explanations for all risk detections and monitoring decisions." .
+
+########################
+# SoftGoal influences on Requirements
+########################
+
+gvre:SG1 gvre:influencesRequirement gvre:FR1 , gvre:FR2 , gvre:FR3 , gvre:FR4 , gvre:NFR1 .
+gvre:SG2 gvre:influencesRequirement gvre:FR3 , gvre:FR4 , gvre:FR6 , gvre:NFR5 .
+gvre:SG3 gvre:influencesRequirement gvre:FR5 , gvre:FR6 , gvre:FR7 , gvre:NFR4 .
+gvre:SG4 gvre:influencesRequirement gvre:FR3 , gvre:FR5 , gvre:NFR4 .
+gvre:SG5 gvre:influencesRequirement gvre:FR3 , gvre:FR4 , gvre:NFR3 .
+
+########################
+# NFR addressing FRs (quality constraints)
+########################
+
+gvre:FR1 gvre:addressedByNFR gvre:NFR1 .
+gvre:FR2 gvre:addressedByNFR gvre:NFR1 .
+gvre:FR3 gvre:addressedByNFR gvre:NFR1 , gvre:NFR2 , gvre:NFR4 .
+gvre:FR4 gvre:addressedByNFR gvre:NFR1 , gvre:NFR2 , gvre:NFR3 .
+gvre:FR5 gvre:addressedByNFR gvre:NFR4 .
+gvre:FR6 gvre:addressedByNFR gvre:NFR5 .
+gvre:FR7 gvre:addressedByNFR gvre:NFR3 .
+
+#################################################################
+# Value-based layer: ValueRegister, EVRs, VBSRs
+#################################################################
+
+gvre:OnlimValueRegister a gvre:ValueRegister ;
+  rdfs:label "ONLIM Value Register" ;
+  gvre:hasDescription "Catalog of ethical values (privacy, transparency, accountability, fairness, safety, reliability, trust) for the ONLIM use case." .
+
+# Softgoals adding context to ValueRegister
+gvre:SG1 gvre:addsContextToValueRegister gvre:OnlimValueRegister .
+gvre:SG2 gvre:addsContextToValueRegister gvre:OnlimValueRegister .
+gvre:SG3 gvre:addsContextToValueRegister gvre:OnlimValueRegister .
+gvre:SG4 gvre:addsContextToValueRegister gvre:OnlimValueRegister .
+gvre:SG5 gvre:addsContextToValueRegister gvre:OnlimValueRegister .
+
+########################
+# Ethical Value Requirements (EVRs)
+########################
+
+gvre:EVR1 a gvre:EthicalValueRequirement ;
+  rdfs:label "EVR1" ;
+  gvre:hasDescription "The system must enforce privacy protection across all monitoring workflows." .
+
+gvre:EVR2 a gvre:EthicalValueRequirement ;
+  rdfs:label "EVR2" ;
+  gvre:hasDescription "The system must provide transparency regarding AI operations and monitoring." .
+
+gvre:EVR3 a gvre:EthicalValueRequirement ;
+  rdfs:label "EVR3" ;
+  gvre:hasDescription "The system must prevent harmful or misleading chatbot outputs." .
+
+gvre:EVR4 a gvre:EthicalValueRequirement ;
+  rdfs:label "EVR4" ;
+  gvre:hasDescription "The system must detect and mitigate biased chatbot outputs." .
+
+gvre:EVR5 a gvre:EthicalValueRequirement ;
+  rdfs:label "EVR5" ;
+  gvre:hasDescription "The system must ensure traceability and provenance of all model outputs and risk decisions." .
+
+# ValueRegister defines these EVRs
+gvre:OnlimValueRegister gvre:definesEVR
+  gvre:EVR1 , gvre:EVR2 , gvre:EVR3 , gvre:EVR4 , gvre:EVR5 .
+
+########################
+# Value-Based System Requirements (VBSRs)
+########################
+
+gvre:VBSR1 a gvre:ValueBasedSystemRequirement ;
+  rdfs:label "VBSR1" ;
+  gvre:hasDescription "The system shall implement data minimization to limit exposure of personal data in all logs." .
+
+gvre:VBSR2 a gvre:ValueBasedSystemRequirement ;
+  rdfs:label "VBSR2" ;
+  gvre:hasDescription "The system shall present transparency notices about AI monitoring." .
+
+gvre:VBSR3 a gvre:ValueBasedSystemRequirement ;
+  rdfs:label "VBSR3" ;
+  gvre:hasDescription "The system shall apply safeguards and filters to prevent harmful content." .
+
+gvre:VBSR4 a gvre:ValueBasedSystemRequirement ;
+  rdfs:label "VBSR4" ;
+  gvre:hasDescription "The system shall perform bias analysis on chatbot outputs." .
+
+gvre:VBSR5 a gvre:ValueBasedSystemRequirement ;
+  rdfs:label "VBSR5" ;
+  gvre:hasDescription "The system shall log provenance metadata for all risk-relevant events." .
+
+# EVR generates VBSR
+gvre:EVR1 gvre:generatesVBSR gvre:VBSR1 .
+gvre:EVR2 gvre:generatesVBSR gvre:VBSR2 .
+gvre:EVR3 gvre:generatesVBSR gvre:VBSR3 .
+gvre:EVR4 gvre:generatesVBSR gvre:VBSR4 .
+gvre:EVR5 gvre:generatesVBSR gvre:VBSR5 .
+
+########################
+# VBSR refining FR/NFR (Requirements)
+########################
+
+# Privacy & minimization
+gvre:FR3 gvre:refinedByVBSR gvre:VBSR1 .
+gvre:FR5 gvre:refinedByVBSR gvre:VBSR1 .
+gvre:NFR4 gvre:refinedByVBSR gvre:VBSR1 .
+
+# Transparency
+gvre:FR3 gvre:refinedByVBSR gvre:VBSR2 .
+gvre:FR6 gvre:refinedByVBSR gvre:VBSR2 .
+gvre:NFR5 gvre:refinedByVBSR gvre:VBSR2 .
+
+# Safety / harm avoidance
+gvre:FR4 gvre:refinedByVBSR gvre:VBSR3 .
+gvre:NFR3 gvre:refinedByVBSR gvre:VBSR3 .
+
+# Fairness / bias
+gvre:FR7 gvre:refinedByVBSR gvre:VBSR4 .
+
+# Accountability / provenance
+gvre:FR1 gvre:refinedByVBSR gvre:VBSR5 .
+gvre:FR2 gvre:refinedByVBSR gvre:VBSR5 .
+gvre:FR6 gvre:refinedByVBSR gvre:VBSR5 .
+gvre:NFR1 gvre:refinedByVBSR gvre:VBSR5 .
+gvre:NFR4 gvre:refinedByVBSR gvre:VBSR5 .
